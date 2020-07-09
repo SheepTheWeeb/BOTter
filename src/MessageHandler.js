@@ -27,15 +27,9 @@ const MessageHandler = function(prefix) {
     let arguments = splitCommand.slice(1);
 
     //Execute commands
-
-    //testcommand
-    if (primaryCommand === 'ping') {
-      //test reply
-      msg.reply('Pong!, your command was: ' + msg.content);
-
-      //test reaction
-      var handsUp = msg.guild.emojis.cache.get("730514368781090956");
-      msg.react(handsUp)
+    if(commandLookup.exists(primaryCommand)) {
+      let command = commandLookup.get(primaryCommand);
+      command.execute(msg, arguments);
     }
   }
 
