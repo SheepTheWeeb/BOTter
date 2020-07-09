@@ -1,0 +1,14 @@
+{
+  "name": "botter",
+  "version": "1.0.0",
+  "description": "De otter bot",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "author": "Schaap",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  }
+}
