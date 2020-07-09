@@ -24,12 +24,12 @@ const MessageHandler = function(prefix) {
     //get command arguments
     let splitCommand = msg.content.split(" ");
     let primaryCommand = splitCommand[0];
-    let arguments = splitCommand.slice(1);
+    let args = splitCommand.slice(1);
 
     //Execute commands
     if(commandLookup.exists(primaryCommand)) {
       let command = commandLookup.get(primaryCommand);
-      command.execute(msg, arguments);
+      command.execute(msg, args);
     }
   }
 

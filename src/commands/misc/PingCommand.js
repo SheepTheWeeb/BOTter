@@ -1,21 +1,18 @@
-const AbstractCommand = require('./../AbstractCommand');
+const Command = require('./../Command');
 
 /**
  * PingCommand class, this is the first command created for the bot
  * It simply replies with 'Pong!' when you type this command.
  */
-class PingCommand extends AbstractCommand {
+class PingCommand extends Command {
 
   constructor() {
-    this.name = "ping",
-    this.alias = ["pong", "test"],
-    this.description = "Ping command, answers with 'Pong!'.",
-    this.usage = process.env.PREFIX + "ping",
-    this.enabled = true
+    super("ping", ["pong", "test"], "Ping command, answers with 'Pong!'.", 
+      process.env.PREFIX + "ping", true)
   }
 
-  execute(msg, arguments) {
-    if(arguments.length == 0) {
+  execute(msg, args) {
+    if(args.length == 0) {
       //test reply
       msg.reply('Pong!, your command was: ' + msg.content);
 
