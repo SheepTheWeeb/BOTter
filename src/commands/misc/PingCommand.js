@@ -11,7 +11,7 @@ class PingCommand extends Command {
       process.env.PREFIX + "ping", true)
   }
 
-  execute(msg, args) {
+  async execute(msg, args) {
     if(args.length == 0) {
       //test reply
       msg.reply('Pong!, your command was: ' + msg.content);

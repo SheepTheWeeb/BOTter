@@ -22,16 +22,6 @@ class Command {
   }
 
   /**
-   * What gets executed if the command is called
-   * 
-   * @param {*} msg Message that executed this command
-   * @param {*} args Command arguments
-   */
-  execute(msg, args) {
-    throw new Error("Abstract method!");
-  }
-
-  /**
    * quick test if the abstractness works
    */
   testAbstract() {

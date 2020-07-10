@@ -17,8 +17,8 @@ client.on('ready', () => {
 });
 
 //use message handler to handle messages
-client.on('message', msg => {
-  messageHandler.handle(msg);
+client.on('message', async msg => {
+  await messageHandler.handle(msg);
 });
 
 //start the bot

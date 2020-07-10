@@ -1,4 +1,5 @@
 const PingCommand = require('./misc/PingCommand');
+const OtterPicCommand = require('./otter/OtterPicCommand');
 
 /**
  * class used to lookup bot commands by name or alias
@@ -15,6 +16,7 @@ const CommandLookup = function() {
   commandLookup.init = function() {
     const commands = {
       PingCommand: new PingCommand(),
+      OtterPicCommand: new OtterPicCommand,
     }
 
     this.commands = loadCommands(commands);

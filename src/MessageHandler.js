@@ -12,7 +12,7 @@ const MessageHandler = function(prefix) {
    * 
    * @param {*} msg The message that it reads from discord
    */
-  messageHandler.handle = function(msg) {
+  messageHandler.handle = async function(msg) {
     //Stop if the message is from a bot
     if(msg.author.bot) return;
 
@@ -29,7 +29,7 @@ const MessageHandler = function(prefix) {
     //Execute commands
     if(commandLookup.exists(primaryCommand)) {
       let command = commandLookup.get(primaryCommand);
-      command.execute(msg, args);
+      await command.execute(msg, args);
     }
   }
 
