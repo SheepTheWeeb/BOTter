@@ -40,7 +40,7 @@ const otterfacts = [
 class OtterFactCommand extends Command {
 
   constructor() {
-    super("fact", ["otterfact"], "Gives random otter fact", 
+    super("fact", ["otterfact"], "Gives random otter fact.", 
       process.env.PREFIX + "fact", true)
     this.facts = otterfacts;
   }
