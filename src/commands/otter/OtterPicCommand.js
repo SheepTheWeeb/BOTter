@@ -43,7 +43,6 @@ class OtterPicCommand extends Command {
       msg.channel.send(embed);
 
     } catch(ex) {
-      msg.reply('Image not found...');
       console.log(ex);
     }
 

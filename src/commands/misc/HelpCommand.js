@@ -38,15 +38,20 @@ class HelpCommand extends Command {
       .setTimestamp()
       .setFooter('O T T E R F R A N K');
 
-    //check if message is too large for discord
-    if(commandString.length >= MAX_MESSAGE_LENGTH) {
-      //TODO: fix later
-      msg.reply('zeg ff tegen Sheep dat hij zijn shit moet fixen.')
+    try {
+      //check if message is too large for discord
+      if(commandString.length >= MAX_MESSAGE_LENGTH) {
+        //TODO: fix later
+        msg.reply('zeg ff tegen Sheep dat hij zijn shit moet fixen.')
 
-    } else {
-      //reply
-      embed.setDescription(commandString)
-      msg.channel.send(embed);
+      } else {
+        //reply
+        embed.setDescription(commandString)
+        msg.channel.send(embed);
+      }
+      
+    } catch(ex) {
+      console.log(ex.message);
     }
   }
 }

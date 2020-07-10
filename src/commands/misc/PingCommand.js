@@ -12,17 +12,22 @@ class PingCommand extends Command {
   }
 
   async execute(msg, args) {
-    if(args.length == 0) {
-      //test reply
-      msg.reply('Pong!, your command was: ' + msg.content);
+    try {
+      if(args.length == 0) {
+        //test reply
+        msg.reply('Pong!, your command was: ' + msg.content);
+  
+        //test reaction
+        var handsUp = msg.guild.emojis.cache.get("730514368781090956");
+        msg.react(handsUp)
+      } else {
+        msg.reply("bananen op een fiets. ")
+        msg.react("🍌")
+        msg.react("🚴‍♂️")
+      }
 
-      //test reaction
-      var handsUp = msg.guild.emojis.cache.get("730514368781090956");
-      msg.react(handsUp)
-    } else {
-      msg.reply("bananen op een fiets. ")
-      msg.react("🍌")
-      msg.react("🚴‍♂️")
+    } catch(ex) {
+      console.log(ex.message)
     }
   }
 }

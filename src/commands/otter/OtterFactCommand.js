@@ -46,7 +46,12 @@ class OtterFactCommand extends Command {
   }
 
   async execute(msg, args) {
-    msg.channel.send(this.facts[Math.floor(Math.random() * this.facts.length)]);
+    try {
+      msg.channel.send(this.facts[Math.floor(Math.random() * this.facts.length)]);
+
+    } catch(ex) {
+      console.log(ex.message)
+    }
 
     //react with otter-handsup
     try {
