@@ -15,8 +15,7 @@ class OtterPicCommand extends Command {
   async execute(msg, args) {
     try {
       //make api call
-      let result = await axios.get('https://www.reddit.com/r/Otters.json?limit=100&?sort=top');
-      //let jsonResponse = rawResponse.json();
+      let result = await axios.get('https://www.reddit.com/r/Otters.json?limit=100');
       let posts = result.data.data.children;
 
       //grab random post
