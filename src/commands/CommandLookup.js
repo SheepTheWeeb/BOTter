@@ -39,13 +39,13 @@ const CommandLookup = function() {
     }
 
     Object.keys(this.commands).forEach(e => {
-      if(commandName === e) {
+      if(commandName === e && this.commands[e].enabled) {
         command = this.commands[e];
       }
     });
 
     Object.keys(this.aliases).forEach(e => {
-      if(commandName === e) {
+      if(commandName === e && this.aliases[e].enabled) {
         command = this.aliases[e];
       }
     });

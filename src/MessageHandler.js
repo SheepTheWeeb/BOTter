@@ -29,7 +29,10 @@ const MessageHandler = function(prefix) {
     //Execute commands
     if(commandLookup.exists(primaryCommand)) {
       let command = commandLookup.get(primaryCommand);
-      await command.execute(msg, args);
+
+      if(command !== null) {
+        await command.execute(msg, args);
+      }
     }
   }
 
