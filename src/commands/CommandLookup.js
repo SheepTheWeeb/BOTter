@@ -35,6 +35,7 @@ const CommandLookup = function() {
   commandLookup.get = function(commandName) {
     var command = null;
 
+    // exists is a function from commandLookup
     if(!this.exists(commandName)) {
       console.log("Command does not exist");
       return command;

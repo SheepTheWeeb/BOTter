@@ -2,6 +2,9 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+//load in Database
+const { sequelize } = require('./models');
+
 //load in MessageHandler
 const MessageHandler = require('./MessageHandler');
 const messageHandler = MessageHandler(process.env.PREFIX);
@@ -11,8 +14,10 @@ const CommandLookup = require('./commands/CommandLookup');
 global.commandLookup = CommandLookup();
 commandLookup.init();
 
-//starting message
-client.on('ready', () => {
+//init discord client
+client.on('ready', async () => {
+  //synchronize all the database tables
+  await sequelize.sync();
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
