@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, DataTypes) => {
   const redflag = sequelize.define('redflag', {
     id: {
