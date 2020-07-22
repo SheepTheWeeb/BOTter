@@ -6,7 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
     },
-    user_name: {
+    discord_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    discord_tag: {
       type: DataTypes.STRING,
       allowNull: false,
     }
@@ -17,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 
   user.associate = function(models) {
     user.hasMany(models.redflag, {
-        foreignKey: 'id'
+        foreignKey: 'user_id'
     })
   }
 

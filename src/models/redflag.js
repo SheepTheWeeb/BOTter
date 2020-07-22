@@ -6,8 +6,16 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
     },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     reason: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    double_red: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     }
   }, {
