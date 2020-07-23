@@ -1,6 +1,8 @@
 const PingCommand = require('./misc/PingCommand');
+const PannekoekCommand = require('./misc/PannekoekCommand')
 const OtterPicCommand = require('./otter/OtterPicCommand');
 const OtterFactCommand = require('./otter/OtterFactCommand');
+const OtterRoodCommand = require('./otter/OtterRoodCommand');
 const HelpCommand = require('./misc/HelpCommand');
 
 /**
@@ -18,9 +20,11 @@ const CommandLookup = function() {
   commandLookup.init = function() {
     const commands = {
       PingCommand: new PingCommand(),
+      PannekoekCommand: new PannekoekCommand(),
       HelpCommand: new HelpCommand(),
       OtterPicCommand: new OtterPicCommand(),
       OtterFactCommand: new OtterFactCommand(),
+      OtterRoodCommand: new OtterRoodCommand(),
     }
 
     this.commands = loadCommands(commands);
