@@ -44,24 +44,40 @@ class OtterRoodCommand extends Command {
         return;
       }
 
-      // first look up if the user already exists in the database
-      var foundUser = await user.findOne({
+      // look up if the user that will receive the redflag already exists in the database
+      var receiver = await user.findOne({
         where: {
           discord_id: mentionedUser.id,
         }
       });
 
       //if it does not exist, create one
-      if(!foundUser) {
-        foundUser = await user.create({
+      if(!receiver) {
+        receiver = await user.create({
           discord_id: mentionedUser.id,
           discord_tag: mentionedUser.tag,
         });
       }
 
+      // look up if the user that will give the redflag already exists in the database
+      var giver = await user.findOne({
+        where: {
+          discord_id: msg.author.id,
+        }
+      });
+
+      //if it does not exist, create one
+      if(!giver) {
+        giver = await user.create({
+          discord_id: msg.author.id,
+          discord_tag: msg.author.tag,
+        });
+      }
+
       //save the rode kaart
       await redflag.create({
-        user_id: foundUser.id,
+        user_id: receiver.id,
+        received_from: giver.id,
         reason: reason,
         double_red: false,
       });

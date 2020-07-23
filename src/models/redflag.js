@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    received_from: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     reason: {
       type: DataTypes.STRING,
       allowNull: false,
