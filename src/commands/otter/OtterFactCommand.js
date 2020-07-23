@@ -55,7 +55,7 @@ class OtterFactCommand extends Command {
 
     //react with otter-handsup
     try {
-      var handsUp = msg.guild.emojis.cache.get("730514368781090956");
+      var handsUp = msg.guild.emojis.cache.find(emoji => emoji.name === "HANDSUP");
       msg.react(handsUp)
 
     } catch(ex) {

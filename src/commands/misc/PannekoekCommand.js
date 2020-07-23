@@ -13,6 +13,7 @@ class PannekoekCommand extends Command {
   async execute(msg, args) {
     try {
       msg.reply('je bent een pannekoek.');
+      msg.react("🥞");
   
     } catch(ex) {
       console.log(ex.message)

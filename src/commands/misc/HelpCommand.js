@@ -41,8 +41,36 @@ class HelpCommand extends Command {
     try {
       //check if message is too large for discord
       if(commandString.length >= MAX_MESSAGE_LENGTH) {
-        //TODO: fix later
-        msg.reply('zeg ff tegen Sheep dat hij zijn shit moet fixen.')
+        
+        //split the message and create a charactercounter
+        var parts = commandString.split("\n");
+        parts.shift();
+        var characterCount = 0;
+        var newCommandString = '';
+
+        //for every sentence
+        for(var i = 0; i < parts.length; i++) {
+          //add line length to count
+          characterCount += parts[i].length;
+          newCommandString += '\n' + parts[i];
+
+          //if it goes over the character limit
+          if(characterCount >= MAX_MESSAGE_LENGTH)  {
+            //send the message
+            embed.setDescription(newCommandString)
+            msg.channel.send(embed);
+
+            //reset the counter
+            newCommandString = '';
+            characterCount = 0;
+          }
+
+          //if it reaches the end send the message
+          if(i == parts.length-1 && newCommandString !== '') {
+            embed.setDescription(newCommandString)
+            msg.channel.send(embed);
+          }
+        }
 
       } else {
         //reply

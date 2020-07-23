@@ -20,9 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   user.associate = function(models) {
-    user.hasMany(models.redflag, {
-        foreignKey: 'user_id'
-    })
+    user.hasMany(models.redflag, { foreignKey: 'user_id' });
+    user.hasMany(models.redflag, { foreignKey: 'received_from' });
   }
 
   return user;

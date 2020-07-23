@@ -28,9 +28,8 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   redflag.associate = function(models) {
-    redflag.belongsTo(models.user, {
-        foreignKey: 'id'
-    })
+    redflag.belongsTo(models.user, { foreignKey: 'user_id', as: 'receiver' });
+    redflag.belongsTo(models.user, { foreignKey: 'received_from', as: 'giver' });
   }
 
   return redflag;

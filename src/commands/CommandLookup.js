@@ -4,6 +4,7 @@ const OtterPicCommand = require('./otter/OtterPicCommand');
 const OtterFactCommand = require('./otter/OtterFactCommand');
 const OtterRoodCommand = require('./otter/OtterRoodCommand');
 const OtterDubbelRoodCommand = require('./otter/OtterDubbelRoodCommand');
+const OtterKaartenCommand = require('./otter/OtterKaartenCommand');
 const HelpCommand = require('./misc/HelpCommand');
 
 /**
@@ -27,6 +28,7 @@ const CommandLookup = function() {
       OtterFactCommand: new OtterFactCommand(),
       OtterRoodCommand: new OtterRoodCommand(),
       OtterDubbelRoodCommand: new OtterDubbelRoodCommand(),
+      OtterKaartenCommand: new OtterKaartenCommand(),
     }
 
     this.commands = loadCommands(commands);
