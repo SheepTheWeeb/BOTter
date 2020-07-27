@@ -23,15 +23,15 @@ class OtterKaartenCommand extends Command {
         
         //check if it is a user
         if(!/^<@(!)?[0-9]+>$/i.test(taggedUser)) {
-            msg.reply("In order to give a 'rode kaart', you need to tag a user first.");
-            return;
+          msg.reply("In order to give a 'rode kaart', you need to tag a user first.");
+          return;
         }
 
         //get mentioned user
         const mentionedUser = msg.mentions.users.first()
         if(!mentionedUser) {
-            msg.reply("In order to give a 'rode kaart', you need to tag a valid user.");
-            return;
+          msg.reply("In order to give a 'rode kaart', you need to tag a valid user.");
+          return;
         }
 
         // look up the user
@@ -44,17 +44,16 @@ class OtterKaartenCommand extends Command {
       } else {
         // look up the user
         intendedUser = await user.findOne({
-            where: {
+          where: {
             discord_id: msg.author.id,
-            }
+          }
         });
 
       }
 
       //check if the user is in database
       if(!intendedUser) {
-        const kekEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === "otterKEK");
-        msg.reply(taggedUser + ` has no redflags. ${kekEmoji}`);
+        msg.reply(taggedUser + ` has no redflags. ${emojiLookup.get("otterKEK")}`);
         return;
       }
 
@@ -72,7 +71,7 @@ class OtterKaartenCommand extends Command {
         order: [['updated_at', 'DESC']],
       });
 
-      const disgustedEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === "disgustedotter");
+      const disgustedEmoji = emojiLookup.get("disgustedotter");
 
       //set a max message length
       const MAX_MESSAGE_LENGTH = 1000;

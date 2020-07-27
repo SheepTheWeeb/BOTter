@@ -56,8 +56,7 @@ class OtterTotaalKaartenCommand extends Command {
 
       //check if the user is in database
       if(!intendedUser) {
-        const kekEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === "otterKEK");
-        msg.reply(taggedUser + ` has no redflags. ${kekEmoji}`);
+        msg.reply(taggedUser + ` has no redflags. ${emojiLookup.get("otterKEK")}`);
         return;
       }
 
@@ -69,7 +68,7 @@ class OtterTotaalKaartenCommand extends Command {
         attributes: ['double_red'],
       });
 
-      const thinkEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === "otterthink");
+      const thinkEmoji = emojiLookup.get("otterthink");
 
       var count = 0;
       flags.forEach(flag => {

@@ -12,38 +12,38 @@ class OtterRoodCommand extends Command {
   }
 
   async execute(msg, args) {
+    //grab the tagged user and reason of the rode kaart
+    const taggedUser = args[0];
+    args.shift();
+    const reason = args.join(" ");
+
+    //check if there is a reason
+    if(!reason) {
+      msg.reply("In order to give a 'rode kaart', you need to give a reason.");
+      return;
+    }
+
+    //check if string is less than
+    if(reason.length > 255) {
+      msg.reply("Please give me a shorter reason.");
+      return;
+    }
+
+    //check if a user is mentioned
+    if(!/^<@(!)?[0-9]+>$/i.test(taggedUser)) {
+      console.log(taggedUser)
+      msg.reply("In order to give a 'rode kaart', you need to tag a user first.");
+      return;
+    }
+
+    //get mentioned user
+    const mentionedUser = msg.mentions.users.first()
+    if(!mentionedUser) {
+      msg.reply("In order to give a 'rode kaart', you need to tag a valid user.");
+      return;
+    }
+
     try {
-      //grab the tagged user and reason of the rode kaart
-      const taggedUser = args[0];
-      args.shift();
-      const reason = args.join(" ");
-
-      //check if there is a reason
-      if(!reason) {
-        msg.reply("In order to give a 'rode kaart', you need to give a reason.");
-        return;
-      }
-
-      //check if string is less than
-      if(reason.length > 255) {
-        msg.reply("Please give me a shorter reason.");
-        return;
-      }
-
-      //check if a user is mentioned
-      if(!/^<@(!)?[0-9]+>$/i.test(taggedUser)) {
-        console.log(taggedUser)
-        msg.reply("In order to give a 'rode kaart', you need to tag a user first.");
-        return;
-      }
-
-      //get mentioned user
-      const mentionedUser = msg.mentions.users.first()
-      if(!mentionedUser) {
-        msg.reply("In order to give a 'rode kaart', you need to tag a valid user.");
-        return;
-      }
-
       // look up if the user that will receive the redflag already exists in the database
       var receiver = await user.findOne({
         where: {
@@ -82,9 +82,14 @@ class OtterRoodCommand extends Command {
         double_red: false,
       });
 
+    } catch(ex) {
+      console.log(ex.message)
+    }
+
+    try {
       //send a reply message with an emoji
-      const roodEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === "rode_kaart");
-      msg.channel.send(`Rood! ${roodEmoji}`);
+      //const roodEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === "rode_kaart");
+      msg.channel.send(`Rood! ${emojiLookup.get("rode_kaart")}`);
 
     } catch(ex) {
       console.log(ex.message)

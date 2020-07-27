@@ -83,7 +83,7 @@ class OtterDubbelRoodCommand extends Command {
       });
 
       //send a reply message with an emoji
-      const dubbelRoodEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === "dubbel_rood");
+      const dubbelRoodEmoji = emojiLookup.get("dubbel_rood");
       msg.channel.send(`Dubbel rood! ${dubbelRoodEmoji}`);
       msg.react(dubbelRoodEmoji);
 

@@ -18,8 +18,7 @@ class PingCommand extends Command {
         msg.reply('Pong!, your command was: ' + msg.content);
   
         //test reaction
-        var handsUp = msg.guild.emojis.cache.find(emoji => emoji.name === "HANDSUP");
-        msg.react(handsUp)
+        msg.react(emojiLookup.get("HANDSUP"))
       } else {
         msg.reply("bananen op een fiets. ")
         msg.react("🍌")

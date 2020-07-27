@@ -9,15 +9,21 @@ const { sequelize } = require('./models');
 const MessageHandler = require('./MessageHandler');
 const messageHandler = MessageHandler(process.env.PREFIX);
 
-//load in commandlookup
-const CommandLookup = require('./commands/CommandLookup');
-global.commandLookup = CommandLookup();
-commandLookup.init();
-
 //init discord client
 client.on('ready', async () => {
   //synchronize all the database tables
   await sequelize.sync();
+
+  //load in emojiLookup
+  const EmojiLookup = require('./commands/EmojiLookup');
+  global.emojiLookup = EmojiLookup(client);
+  emojiLookup.init();
+
+  //load in commandlookup
+  const CommandLookup = require('./commands/CommandLookup');
+  global.commandLookup = CommandLookup();
+  commandLookup.init();
+
   console.log(`Logged in as ${client.user.tag}!`);
 });
 

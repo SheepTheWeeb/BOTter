@@ -48,8 +48,7 @@ class OtterPicCommand extends Command {
 
     //react with otter-handsup
     try {
-      var handsUp = msg.guild.emojis.cache.find(emoji => emoji.name === "HANDSUP");
-      msg.react(handsUp)
+      msg.react(emojiLookup.get("HANDSUP"))
 
     } catch(ex) {
       console.log('Reaction failed because of: ' + ex.message);
