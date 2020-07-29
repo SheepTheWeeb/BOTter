@@ -13,6 +13,35 @@ class OtterRankCommand extends Command {
 
   async execute(msg, args) {
     try {
+      var intendedUserId;
+      var messagePart;
+
+      //check if there are arguments
+      if(args.length !== 0) {
+        //grab first argument
+        const taggedUser = args[0];
+        
+        //check if it is a user
+        if(!/^<@(!)?[0-9]+>$/i.test(taggedUser)) {
+          msg.reply("In order to give a 'rode kaart', you need to tag a user first.");
+          return;
+        }
+
+        //get mentioned user
+        const mentionedUser = msg.mentions.users.first()
+        if(!mentionedUser) {
+          msg.reply("In order to give a 'rode kaart', you need to tag a valid user.");
+          return;
+        }
+
+        intendedUserId = mentionedUser.id;
+        messagePart = 'deze otter';
+
+      } else {
+        intendedUserId = msg.author.id;
+        messagePart = 'je';
+      }
+
       //get all normal redflags from each user
       let normalFlags = await redflag.findAll({
         where: {
@@ -79,17 +108,17 @@ class OtterRankCommand extends Command {
       //get the rank
       var otterRank;
       for(var i = 0; i < highscore.length; i++) {
-        if(highscore[i].discord_id === msg.author.id) {
+        if(highscore[i].discord_id === intendedUserId) {
           otterRank = i +1;
           break;
         }
       }
       
       if (otterRank) {
-        msg.reply(`je staat **rank ${otterRank}** jonge otter. ${emojiLookup.get("otter_shocked")}`);
+        msg.reply(`${messagePart} staat **rank ${otterRank}**. ${emojiLookup.get("otter_shocked")}`);
         msg.react(emojiLookup.get("rilakkuma_otter"));
       } else {
-        msg.reply('je staat nog niet in de highscores.');
+        msg.reply(`${messagePart} staat nog niet in de highscores.`);
       }
 
     } catch(ex) {
