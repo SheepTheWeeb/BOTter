@@ -7,6 +7,7 @@ const OtterDubbelRoodCommand = require('./otter/OtterDubbelRoodCommand');
 const OtterKaartenCommand = require('./otter/OtterKaartenCommand');
 const OtterTotaalKaartenCommand = require('./otter/OtterTotaalKaartenCommand');
 const HelpCommand = require('./misc/HelpCommand');
+const UptimeCommand = require('./misc/UptimeCommand');
 
 /**
  * class used to lookup bot commands by name or alias
@@ -25,6 +26,7 @@ const CommandLookup = function() {
       PingCommand: new PingCommand(),
       PannekoekCommand: new PannekoekCommand(),
       HelpCommand: new HelpCommand(),
+      UptimeCommand: new UptimeCommand(),
       OtterPicCommand: new OtterPicCommand(),
       OtterFactCommand: new OtterFactCommand(),
       OtterRoodCommand: new OtterRoodCommand(),
