@@ -9,6 +9,7 @@ const OtterTotaalKaartenCommand = require('./otter/OtterTotaalKaartenCommand');
 const HelpCommand = require('./misc/HelpCommand');
 const UptimeCommand = require('./misc/UptimeCommand');
 const OtterHighscoreCommand = require('./otter/OtterHighscoreCommand');
+const OtterRankCommand = require('./otter/OtterRankCommand');
 
 /**
  * class used to lookup bot commands by name or alias
@@ -35,6 +36,7 @@ const CommandLookup = function() {
       OtterKaartenCommand: new OtterKaartenCommand(),
       OtterTotaalKaartenCommand: new OtterTotaalKaartenCommand(),
       OtterHighscoreCommand: new OtterHighscoreCommand(),
+      OtterRankCommand: new OtterRankCommand(),
     }
 
     this.commands = loadCommands(commands);
