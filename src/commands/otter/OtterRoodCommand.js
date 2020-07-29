@@ -88,7 +88,6 @@ class OtterRoodCommand extends Command {
 
     try {
       //send a reply message with an emoji
-      //const roodEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === "rode_kaart");
       msg.channel.send(`Rood! ${emojiLookup.get("rode_kaart")}`);
 
     } catch(ex) {
