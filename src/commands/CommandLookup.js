@@ -89,6 +89,7 @@ const CommandLookup = function() {
   }
 
   //return lookup object
+  commandLookup.init();
   return commandLookup;
 }
 

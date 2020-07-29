@@ -14,15 +14,9 @@ client.on('ready', async () => {
   //synchronize all the database tables
   await sequelize.sync();
 
-  //load in emojiLookup
-  const EmojiLookup = require('./commands/EmojiLookup');
-  global.emojiLookup = EmojiLookup(client);
-  emojiLookup.init();
-
-  //load in commandlookup
-  const CommandLookup = require('./commands/CommandLookup');
-  global.commandLookup = CommandLookup();
-  commandLookup.init();
+  //load in emojiLookup and commandlookup
+  global.emojiLookup = require('./commands/EmojiLookup')(client);
+  global.commandLookup = require('./commands/CommandLookup')(client);
 
   console.log(`Logged in as ${client.user.tag}!`);
 });

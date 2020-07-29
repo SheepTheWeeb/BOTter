@@ -29,6 +29,7 @@ const EmojiLookup = function(client) {
   }
 
   //return lookup object
+  emojiLookup.init();
   return emojiLookup;
 };
 
