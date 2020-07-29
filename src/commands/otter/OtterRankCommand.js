@@ -43,72 +43,21 @@ class OtterRankCommand extends Command {
       }
 
       //get all normal redflags from each user
-      let normalFlags = await redflag.findAll({
-        where: {
-          double_red: false,
-        },
+      let highscore = await redflag.findAll({
         group: ['user_id'],
-        attributes: ['user_id', [sequelize.fn('COUNT', 'user_id'), 'flags']],
+        order: [[sequelize.literal('flags'), 'DESC']],
+        attributes: ['user_id', [sequelize.literal(`SUM(CASE WHEN double_red = 0 THEN 1 WHEN double_red = 1 THEN 2 END)`), 'flags']],
         include: [{
           model: user,
           as: 'receiver',
           attributes: ['discord_id'],
         }],
-      });
-
-      //get all double redflags from each user
-      let doubleFlags = await await redflag.findAll({
-        where: {
-          double_red: true,
-        },
-        group: ['user_id'],
-        attributes: ['user_id', [sequelize.fn('COUNT', 'user_id'), 'flags']],
-        include: [{
-          model: user,
-          as: 'receiver',
-          attributes: ['discord_id'],
-        }],
-      });
-
-      //create an array with the data from normal flags
-      var highscore = [];
-      normalFlags.forEach(flag => {
-        highscore.push({
-          id: flag.dataValues.user_id,
-          discord_id: flag.dataValues.receiver.discord_id,
-          flags: flag.dataValues.flags,
-        });
-      });
-
-      //merge the normal and double flags
-      doubleFlags.forEach(flag => {
-        let exist = false;
-        for(var i = 0; i < highscore.length; i++) {
-          if(highscore[i].id === flag.dataValues.user_id) {
-            exist = true;
-            highscore[i].flags += (flag.dataValues.flags * 2);
-          }
-
-        }
-
-        if(!exist) {
-          highscore.push({
-            id: flag.dataValues.user_id,
-            discord_id: flag.dataValues.receiver.discord_id,
-            flags: (flag.dataValues.flags * 2),
-          });
-        }
-      });
-
-      //sort
-      highscore.sort((a,b) => {
-        return b.flags - a.flags;
       });
 
       //get the rank
       var otterRank;
       for(var i = 0; i < highscore.length; i++) {
-        if(highscore[i].discord_id === intendedUserId) {
+        if(highscore[i].dataValues.receiver.discord_id === intendedUserId) {
           otterRank = i +1;
           break;
         }
