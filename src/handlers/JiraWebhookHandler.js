@@ -1,6 +1,8 @@
 module.exports = {
   async handle(req, res, client) {
 
+    console.log(req.body)
+
     //grab otter discord server and log channel
     var otterGuild = client.guilds.cache.find(guild => guild.id === '730511256682889319');
     var logChannel = otterGuild.channels.cache.find(channel => channel.id === '738358619032256593');
