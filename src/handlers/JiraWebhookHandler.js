@@ -9,16 +9,17 @@ module.exports = {
       var logChannel = otterGuild.channels.cache.find(channel => channel.id === '738358619032256593');
 
       //create message
-      var description = `**Key:** ${req.body.issue.key}` +
-        `\n**Title:** ${req.body.issue.fields.summary}`;
+      var jiraName = req.body.user.displayName.split(" ")[0];
+      var jiraPics = req.body.user.avatarUrls;
 
       //create embed
       const embed = new Discord.MessageEmbed()
         .setColor('#0088ff')
-        .setTitle(`${req.body.webhookEvent} ${emojiLookup.get("HANDSUP")}`)
+        .setAuthor(jiraName, jiraPics[Object.keys(jiraPics)[0]])
+        .setTitle(`${req.body.issue.key} | ${req.body.webhookEvent} ${emojiLookup.get("HANDSUP")}`)
         .setTimestamp()
-        .setFooter('Ik ben er helemaal klaar mee... pls send help')
-        .setDescription(description);
+        .setFooter('Ik ben er helemaal klaar mee...')
+        .setDescription(req.body.issue.fields.summary);
 
       logChannel.send(embed);
 
