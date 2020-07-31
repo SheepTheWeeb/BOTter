@@ -44,6 +44,7 @@ module.exports = {
         req.body.changelog.items.forEach(item => {
           //to prevent doxxing :monkaS:
           if(item.field === 'reporter') return;
+          if(item.field === 'assignee') return;
 
           embed.addField(item.field, `**Changed from:** ${item.fromString}\n**Changed to:** ${item.toString}`, true);
         });
