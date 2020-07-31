@@ -38,7 +38,7 @@ class UptimeCommand extends Command {
       
       message += seconds + ' seconds';
       
-      //reply
+      //reply with uptime message
       msg.channel.send('Uptime is: ' + message);
       msg.react("🕒")
 
