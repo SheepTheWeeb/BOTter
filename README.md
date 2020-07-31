@@ -96,9 +96,9 @@ Most important dependencies:
 - [Sourcetree](https://www.sourcetreeapp.com/)
 
 ## Credits
-- **Developer**: Sheep
+- **Lead Sheepveloper**: Sheep
 - **SQL guy**: Rick
-- **Big pipeline predator (Big pp)**: Zenny
-- **Advisor**: Saber
+- **Beheer guy**: Zenny
+- **Scrum master**: Saber
 - **Mental support**: Otter
 - **Pog**: Sheep's oom
