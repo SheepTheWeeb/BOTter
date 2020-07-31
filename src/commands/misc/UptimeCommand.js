@@ -29,15 +29,14 @@ class UptimeCommand extends Command {
       if(days > 0) {
         message += days + ' days, ';
       }
-      if(hours > 0) {
+      if(hours > 0 || days > 0) {
         message += hours + ' hours, ';
       }
-      if(minutes > 0) {
+      if(minutes > 0 || hours > 0) {
         message += minutes + ' minutes and ';
       }
-      if(seconds > 0) {
-        message += seconds + ' seconds';
-      }
+      
+      message += seconds + ' seconds';
       
       //reply
       msg.channel.send('Uptime is: ' + message);
