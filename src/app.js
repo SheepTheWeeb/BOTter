@@ -17,7 +17,9 @@ const MessageHandler = require("./handlers/MessageHandler");
 const messageHandler = MessageHandler(process.env.PREFIX);
 appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
 
-export const insightsClient = appInsights.defaultClient;
+module.exports = insightsClient = new appInsights.TelemetryClient(
+  process.env.APPINSIGHTS_INSTRUMENTATIONKEY
+);
 
 //init discord client
 client.on("ready", async () => {
