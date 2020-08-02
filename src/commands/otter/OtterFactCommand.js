@@ -1,4 +1,4 @@
-const Command = require('./../Command');
+const Command = require("./../Command");
 const otterfacts = [
   "An otter shits 5 times a year.",
   "California’s southern sea otter has been listed as a threatened species under the Endangered Species Act since 1977.",
@@ -32,33 +32,31 @@ const otterfacts = [
   "White shark bites are now the leading cause of sea otter mortality in California.",
   "Large percentage of southern sea otter mortality is due to infectious diseases, many of which are known to have anthropogenic causes.",
   "Threats to population recovery include white sharks, pathogens & parasites, food limitation, coastal pollutants and oil spills.",
-]
+];
 
 /**
  * Tells you a random otterfact
  */
 class OtterFactCommand extends Command {
-
   constructor() {
-    super("fact", ["otterfact"], "Gives random otter fact.", 
-      process.env.PREFIX + "fact", true)
+    super(
+      "fact",
+      ["otterfact"],
+      "Gives random otter fact.",
+      process.env.PREFIX + "fact",
+      true
+    );
     this.facts = otterfacts;
   }
 
   async execute(msg, args) {
-    try {
-      msg.channel.send(this.facts[Math.floor(Math.random() * this.facts.length)]);
-
-    } catch(ex) {
-      console.log(ex.message)
-    }
+    msg.channel.send(this.facts[Math.floor(Math.random() * this.facts.length)]);
 
     //react with otter-handsup
     try {
       msg.react(emojiLookup.get("HANDSUP"));
-
-    } catch(ex) {
-      console.log('Reaction failed because of: ' + ex.message);
+    } catch (ex) {
+      throw Error("Reaction failed because of: " + ex.message);
     }
   }
 }
