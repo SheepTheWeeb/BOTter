@@ -1,6 +1,6 @@
-const Command = require("./../Command");
-const Discord = require("discord.js");
-const { sequelize, redflag, user } = require("./../../models");
+const Discord = require('discord.js');
+const Command = require('../Command');
+const { sequelize, redflag, user } = require('../../models');
 
 /**
  * You can give red flags/cards to people
@@ -8,56 +8,56 @@ const { sequelize, redflag, user } = require("./../../models");
 class OtterHighscoreCommand extends Command {
   constructor() {
     super(
-      "highscore",
-      ["highscores", "scoreboard", "scores", "score", "ranks"],
-      "Shows the top 10 users with most redflags.",
-      process.env.PREFIX + "highscore",
+      'highscore',
+      ['highscores', 'scoreboard', 'scores', 'score', 'ranks'],
+      'Shows the top 10 users with most redflags.',
+      `${process.env.PREFIX}highscore`,
       true
     );
   }
 
-  async execute(msg, args) {
-    //get all normal redflags from each user
-    let highscore = await redflag.findAll({
-      group: ["user_id"],
-      order: [[sequelize.literal("flags"), "DESC"]],
+  static async execute(msg) {
+    // get all normal redflags from each user
+    const highscore = await redflag.findAll({
+      group: ['user_id'],
+      order: [[sequelize.literal('flags'), 'DESC']],
       attributes: [
-        "user_id",
+        'user_id',
         [
           sequelize.literal(
             `SUM(CASE WHEN double_red = 0 THEN 1 WHEN double_red = 1 THEN 2 END)`
           ),
-          "flags",
-        ],
+          'flags'
+        ]
       ],
       include: [
         {
           model: user,
-          as: "receiver",
-          attributes: ["discord_tag"],
-        },
+          as: 'receiver',
+          attributes: ['discord_tag']
+        }
       ],
-      limit: 10,
+      limit: 10
     });
 
-    //create message
-    var highscoreString = "";
-    for (var i = 0; i < highscore.length; i++) {
+    // create message
+    let highscoreString = '';
+    for (let i = 0; i < highscore.length; i++) {
       highscoreString += `\n**${i + 1}.** Otter: **${
         highscore[i].dataValues.receiver.discord_tag
       }** - Flags: **${highscore[i].dataValues.flags}**`;
     }
 
-    //create embed message
+    // create embed message
     const embed = new Discord.MessageEmbed()
-      .setColor("#0088ff")
-      .setTitle(`Highscore Redflag ${emojiLookup.get("rode_kaart")}`)
+      .setColor('#0088ff')
+      .setTitle(`Highscore Redflag ${emojiLookup.get('rode_kaart')}`)
       .setTimestamp()
-      .setFooter("Top 10 Anime Battles");
+      .setFooter('Top 10 Anime Battles');
 
     embed.setDescription(highscoreString);
     msg.channel.send(embed);
-    msg.react(emojiLookup.get("rode_kaart"));
+    msg.react(emojiLookup.get('rode_kaart'));
   }
 }
 

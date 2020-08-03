@@ -1,44 +1,48 @@
 /**
  * MessageHandler is a factory object which handles all of the discord messages it receives
- * 
+ *
  * @param {*} prefix Prefix for every command
  */
-const MessageHandler = function(prefix) {
+const MessageHandler = (prefix) => {
   const messageHandler = {};
   messageHandler.prefix = prefix;
 
   /**
    * A function to handle all of the incoming discord messages
-   * 
+   *
    * @param {*} msg The message that it reads from discord
    */
-  messageHandler.handle = function(msg) {
-    //Stop if the message is from a bot
-    if(msg.author.bot) return;
+  messageHandler.handle = (msg) => {
+    // Stop if the message is from a bot
+    if (msg.author.bot) return;
 
-    //Validate and remove prefix
-    if(msg.content.startsWith(this.prefix)) {
-      msg.content = msg.content.replace(this.prefix, "");
-    } else { return; }
+    let msgString = msg.content;
 
-    //get command arguments
-    let splitCommand = msg.content.split(" ");
-    let primaryCommand = splitCommand[0];
-    let args = splitCommand.slice(1);
+    // Validate and remove prefix
+    if (msgString.startsWith(this.prefix)) {
+      msgString = msgString.replace(this.prefix, '');
+    } else {
+      return;
+    }
 
-    //Execute commands
-    if(commandLookup.exists(primaryCommand)) {
-      let command = commandLookup.get(primaryCommand);
+    // get command arguments
+    const splitCommand = msgString.split(' ');
+    const primaryCommand = splitCommand[0];
+    const args = splitCommand.slice(1);
 
-      if(command !== null) {
+    // Execute commands
+    if (commandLookup.exists(primaryCommand)) {
+      const command = commandLookup.get(primaryCommand);
+
+      if (command !== null) {
         command.execute(msg, args);
       }
     }
-  }
+  };
 
-  //return messagehandler object
+  // return messagehandler object
   return messageHandler;
-}
+};
 
-//Export messagehandler so it can be imported into other files
+// Export messagehandler so it can be imported into other files
 module.exports = MessageHandler;

@@ -1,21 +1,53 @@
-const PingCommand = require("./misc/PingCommand");
-const PannekoekCommand = require("./misc/PannekoekCommand");
-const OtterPicCommand = require("./otter/OtterPicCommand");
-const OtterFactCommand = require("./otter/OtterFactCommand");
-const OtterRoodCommand = require("./otter/OtterRoodCommand");
-const OtterDubbelRoodCommand = require("./otter/OtterDubbelRoodCommand");
-const OtterKaartenCommand = require("./otter/OtterKaartenCommand");
-const OtterTotaalKaartenCommand = require("./otter/OtterTotaalKaartenCommand");
-const HelpCommand = require("./misc/HelpCommand");
-const UptimeCommand = require("./misc/UptimeCommand");
-const OtterHighscoreCommand = require("./otter/OtterHighscoreCommand");
-const OtterRankCommand = require("./otter/OtterRankCommand");
-const insightsClient = require("../app");
+const PingCommand = require('./misc/PingCommand');
+const PannekoekCommand = require('./misc/PannekoekCommand');
+const OtterPicCommand = require('./otter/OtterPicCommand');
+const OtterFactCommand = require('./otter/OtterFactCommand');
+const OtterRoodCommand = require('./otter/OtterRoodCommand');
+const OtterDubbelRoodCommand = require('./otter/OtterDubbelRoodCommand');
+const OtterKaartenCommand = require('./otter/OtterKaartenCommand');
+const OtterTotaalKaartenCommand = require('./otter/OtterTotaalKaartenCommand');
+const HelpCommand = require('./misc/HelpCommand');
+const UptimeCommand = require('./misc/UptimeCommand');
+const OtterHighscoreCommand = require('./otter/OtterHighscoreCommand');
+const OtterRankCommand = require('./otter/OtterRankCommand');
+const insightsClient = require('../app');
+
+/**
+ * loads in all commands
+ *
+ * @param {*} commands
+ */
+function loadCommands(commands) {
+  const tempCommands = {};
+
+  Object.keys(commands).forEach((e) => {
+    tempCommands[commands[e].name] = commands[e];
+  });
+
+  return tempCommands;
+}
+
+/**
+ * loads in all aliases
+ *
+ * @param {*} commands
+ */
+function loadAlias(commands) {
+  const aliases = {};
+
+  Object.keys(commands).forEach((e) => {
+    commands[e].alias.forEach((alias) => {
+      aliases[alias] = commands[e];
+    });
+  });
+
+  return aliases;
+}
 
 /**
  * class used to lookup bot commands by name or alias
  */
-const CommandLookup = function () {
+const CommandLookup = () => {
   const commandLookup = {};
 
   commandLookup.commands = {};
@@ -24,7 +56,7 @@ const CommandLookup = function () {
   /**
    * init the commandlookup class
    */
-  commandLookup.init = function () {
+  commandLookup.init = () => {
     const commands = {
       PingCommand: new PingCommand(),
       PannekoekCommand: new PannekoekCommand(),
@@ -37,7 +69,7 @@ const CommandLookup = function () {
       OtterKaartenCommand: new OtterKaartenCommand(),
       OtterTotaalKaartenCommand: new OtterTotaalKaartenCommand(),
       OtterHighscoreCommand: new OtterHighscoreCommand(),
-      OtterRankCommand: new OtterRankCommand(),
+      OtterRankCommand: new OtterRankCommand()
     };
 
     this.commands = loadCommands(commands);
@@ -49,12 +81,12 @@ const CommandLookup = function () {
    *
    * @param {*} commandName name or alias of the bot command
    */
-  commandLookup.get = function (commandName) {
-    var command = null;
+  commandLookup.get = (commandName) => {
+    let command = null;
 
     // exists is a function from commandLookup
     if (!this.exists(commandName)) {
-      insightsClient.trackTrace("Command does not exist");
+      insightsClient.trackTrace('Command does not exist');
       return command;
     }
 
@@ -78,8 +110,8 @@ const CommandLookup = function () {
    *
    * @param {*} commandName
    */
-  commandLookup.exists = function (commandName) {
-    var found = false;
+  commandLookup.exists = (commandName) => {
+    let found = false;
     Object.keys(this.commands).forEach((e) => {
       if (commandName === e) {
         found = true;
@@ -95,40 +127,10 @@ const CommandLookup = function () {
     return found;
   };
 
-  //return lookup object
+  // return lookup object
   commandLookup.init();
   return commandLookup;
 };
 
-/**
- * loads in all commands
- *
- * @param {*} commands
- */
-function loadCommands(commands) {
-  var tempCommands = {};
-
-  Object.keys(commands).forEach((e) => {
-    tempCommands[commands[e].name] = commands[e];
-  });
-
-  return tempCommands;
-}
-
-/**
- * loads in all aliases
- *
- * @param {*} commands
- */
-function loadAlias(commands) {
-  var aliases = {};
-
-  Object.keys(commands).forEach((e) => {
-    commands[e].alias.forEach((alias) => (aliases[alias] = commands[e]));
-  });
-
-  return aliases;
-}
-
-//export object to make accessible via other files
+// export object to make accessible via other files
 module.exports = CommandLookup;

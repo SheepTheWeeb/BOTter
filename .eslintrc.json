@@ -1,0 +1,32 @@
+{
+  "env": {
+    "commonjs": true,
+    "es2020": true,
+    "node": true
+  },
+  "extends": [
+    "airbnb-base",
+    "plugin:prettier/recommended",
+    "prettier/standard"
+  ],
+  "plugins": ["prettier"],
+  "globals": {
+    "emojiLookup": true,
+    "commandLookup": true,
+    "logger": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "import/no-dynamic-require": 0,
+    "global-require": 0,
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ]
+  }
+}
