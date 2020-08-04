@@ -1,5 +1,5 @@
-const Command = require("./../Command");
-const { user, redflag } = require("./../../models");
+const Command = require('../Command');
+const { user, redflag } = require('../../models');
 
 /**
  * gives the last 10 redflags
@@ -7,24 +7,32 @@ const { user, redflag } = require("./../../models");
 class OtterTotaalKaartenCommand extends Command {
   constructor() {
     super(
-      "totaalkaarten",
-      ["totaalrood", "totalflags"],
-      "Gives the number of redflags you have (and counts double red as 2).",
-      process.env.PREFIX + "totaalrood <user>",
+      'totaalkaarten',
+      ['totaalrood', 'totalflags'],
+      'Gives the number of redflags you have (and counts double red as 2).',
+      `${process.env.PREFIX}totaalrood <user>`,
       true
     );
   }
 
   async execute(msg, args) {
-    var intendedUser;
-    var messagePart = "";
+    // check if command is enabled
+    if (!this.enabled) {
+      logger.error(`Command '${this.name}' is disabled but still called.`);
+      return;
+    }
 
-    //check if there are arguments
+    let intendedUser;
+    let messagePart = '';
+    let taggedUser;
+
+    // check if there are arguments
     if (args.length !== 0) {
-      //grab first argument
-      const taggedUser = args[0];
+      // grab first argument
+      const FIRST_INDEX = 0;
+      taggedUser = args[FIRST_INDEX];
 
-      //check if it is a user
+      // check if it is a user
       if (!/^<@(!)?[0-9]+>$/i.test(taggedUser)) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a user first."
@@ -32,7 +40,7 @@ class OtterTotaalKaartenCommand extends Command {
         return;
       }
 
-      //get mentioned user
+      // get mentioned user
       const mentionedUser = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
@@ -44,50 +52,52 @@ class OtterTotaalKaartenCommand extends Command {
       // look up the user
       intendedUser = await user.findOne({
         where: {
-          discord_id: mentionedUser.id,
-        },
+          discord_id: mentionedUser.id
+        }
       });
 
       messagePart = `${intendedUser.discord_tag} has`;
     } else {
+      taggedUser = msg.author.tag;
+
       // look up the user
       intendedUser = await user.findOne({
         where: {
-          discord_id: msg.author.id,
-        },
+          discord_id: msg.author.id
+        }
       });
 
-      messagePart = "you have";
+      messagePart = 'you have';
     }
 
-    //check if the user is in database
+    // check if the user is in database
     if (!intendedUser) {
       msg.reply(
-        taggedUser + ` has no redflags. ${emojiLookup.get("otterKEK")}`
+        `${taggedUser} has no redflags. ${emojiLookup.get('otterKEK')}`
       );
       return;
     }
 
-    //show last 10 redflags
-    var flags = await redflag.findAll({
+    // show last 10 redflags
+    const flags = await redflag.findAll({
       where: {
-        user_id: intendedUser.id,
+        user_id: intendedUser.id
       },
-      attributes: ["double_red"],
+      attributes: ['double_red']
     });
 
-    const thinkEmoji = emojiLookup.get("otterthink");
+    const thinkEmoji = emojiLookup.get('otterthink');
 
-    var count = 0;
+    let count = 0;
     flags.forEach((flag) => {
       if (flag.double_red) {
         count += 2;
       } else {
-        count++;
+        count += 1;
       }
     });
 
-    //send a reaction with an emoji
+    // send a reaction with an emoji
     msg.reply(`${messagePart} ${count} red flags. ${thinkEmoji}`);
     msg.react(thinkEmoji);
   }

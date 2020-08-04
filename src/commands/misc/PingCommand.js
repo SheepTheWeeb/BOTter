@@ -1,4 +1,4 @@
-const Command = require("./../Command");
+const Command = require('../Command');
 
 /**
  * PingCommand class, this is the first command created for the bot
@@ -7,25 +7,31 @@ const Command = require("./../Command");
 class PingCommand extends Command {
   constructor() {
     super(
-      "ping",
-      ["pong", "test"],
+      'ping',
+      ['pong', 'test'],
       "Ping command, answers with 'Pong!'.",
-      process.env.PREFIX + "ping",
+      `${process.env.PREFIX}ping`,
       true
     );
   }
 
   async execute(msg, args) {
-    if (args.length == 0) {
-      //test reply
-      msg.reply("Pong!, your command was: " + msg.content);
+    // check if command is enabled
+    if (!this.enabled) {
+      logger.error(`Command '${this.name}' is disabled but still called.`);
+      return;
+    }
 
-      //test reaction
-      msg.react(emojiLookup.get("HANDSUP"));
+    if (args.length === 0) {
+      // test reply
+      msg.reply(`Pong!, your command was: ${msg.content}`);
+
+      // test reaction
+      msg.react(emojiLookup.get('HANDSUP'));
     } else {
-      msg.reply("bananen op een fiets. ");
-      msg.react("🍌");
-      msg.react("🚴‍♂️");
+      msg.reply('bananen op een fiets. ');
+      msg.react('🍌');
+      msg.react('🚴‍♂️');
     }
   }
 }
