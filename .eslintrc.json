@@ -13,7 +13,8 @@
   "globals": {
     "emojiLookup": true,
     "commandLookup": true,
-    "logger": true
+    "logger": true,
+    "insightsClient": true
   },
   "parserOptions": {
     "ecmaVersion": 11

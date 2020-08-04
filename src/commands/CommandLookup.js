@@ -10,7 +10,6 @@ const HelpCommand = require('./misc/HelpCommand');
 const UptimeCommand = require('./misc/UptimeCommand');
 const OtterHighscoreCommand = require('./otter/OtterHighscoreCommand');
 const OtterRankCommand = require('./otter/OtterRankCommand');
-const insightsClient = require('../app');
 
 /**
  * loads in all commands

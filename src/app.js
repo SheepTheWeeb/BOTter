@@ -23,11 +23,9 @@ const messageHandler = MessageHandler(process.env.PREFIX);
 
 appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
 
-const insightsClient = new appInsights.TelemetryClient(
+global.insightsClient = new appInsights.TelemetryClient(
   process.env.APPINSIGHTS_INSTRUMENTATIONKEY
 );
-
-module.exports = insightsClient;
 
 // init discord client
 client.on('ready', async () => {
