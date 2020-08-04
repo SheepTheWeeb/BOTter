@@ -29,9 +29,6 @@ global.insightsClient = new appInsights.TelemetryClient(
 
 // init discord client
 client.on('ready', async () => {
-  // synchronize all the database tables
-  await sequelize.sync();
-
   // load in emojiLookup and commandlookup
   global.emojiLookup = require('./commands/EmojiLookup')(client);
   global.commandLookup = require('./commands/CommandLookup')(client);
