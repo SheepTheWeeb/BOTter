@@ -48,9 +48,10 @@ client.on('message', (msg) => {
 // start the bot
 client.login(process.env.DISCORD_TOKEN);
 
-app.use((err, req, res) => {
+/* eslint-disable-next-line no-unused-vars */
+app.use((err, req, res, next) => {
   logger.error(err.stack);
-  res.status(500);
+  res.sendStatus(500);
 });
 
 process.on('uncaughtException', (err) => {
