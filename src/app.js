@@ -14,7 +14,6 @@ app.use(bodyParser.json());
 
 // load in Database
 require('./config/PostgratorConfig')();
-const { sequelize } = require('./models');
 
 // load in MessageHandler
 const MessageHandler = require('./handlers/MessageHandler');
