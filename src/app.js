@@ -63,7 +63,8 @@ process.on('uncaughtException', (err) => {
   insightsClient.trackException({
     exception: err
   });
-  logger.error(`Uncaught Exception: ${err.stack}`);
+  logger.error(`Uncaught Exception: ${err.message}`);
+  console.log(err);
   // process.exit(1) Best practice is to exit app on errors so that Docker can restart automatically
 });
 
@@ -71,5 +72,6 @@ process.on('unhandledRejection', (err) => {
   insightsClient.trackException({
     exception: err
   });
-  logger.error(`Unhandled rejection: ${err.stack}`);
+  logger.error(`Unhandled rejection: ${err.message}`);
+  console.log(err);
 });

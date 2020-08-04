@@ -20,6 +20,7 @@
   },
   "rules": {
     "prettier/prettier": "error",
+    "no-console": "off",
     "import/no-dynamic-require": 0,
     "global-require": 0,
     "no-plusplus": [
