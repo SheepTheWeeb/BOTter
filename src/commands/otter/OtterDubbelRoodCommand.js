@@ -15,7 +15,13 @@ class OtterDubbelRoodCommand extends Command {
     );
   }
 
-  static async execute(msg, args) {
+  async execute(msg, args) {
+    // check if command is enabled
+    if (!this.enabled) {
+      logger.error(`Command '${this.name}' is disabled but still called.`);
+      return;
+    }
+
     // grab the tagged user and reason of the rode kaart
     const taggedUser = args[0];
     args.shift();

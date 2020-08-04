@@ -15,7 +15,13 @@ class OtterRankCommand extends Command {
     );
   }
 
-  static async execute(msg, args) {
+  async execute(msg, args) {
+    // check if command is enabled
+    if (!this.enabled) {
+      logger.error(`Command '${this.name}' is disabled but still called.`);
+      return;
+    }
+
     let intendedUserId;
     let messagePart;
 

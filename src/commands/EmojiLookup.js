@@ -10,7 +10,7 @@ const EmojiLookup = (client) => {
    * init the emojilookup class
    */
   emojiLookup.init = () => {
-    this.client.guilds.cache.forEach((guild) => {
+    emojiLookup.client.guilds.cache.forEach((guild) => {
       guild.emojis.cache.forEach((emoji) => {
         emojiLookup.emojis.push(emoji);
       });
@@ -23,7 +23,7 @@ const EmojiLookup = (client) => {
    * @param {*} emojiName name of the emoji
    */
   emojiLookup.get = (emojiName) => {
-    return this.emojis.find((emoji) => emoji.name === emojiName);
+    return emojiLookup.emojis.find((emoji) => emoji.name === emojiName);
   };
 
   // return lookup object

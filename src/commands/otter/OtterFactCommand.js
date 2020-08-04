@@ -51,6 +51,12 @@ class OtterFactCommand extends Command {
   }
 
   async execute(msg) {
+    // check if command is enabled
+    if (!this.enabled) {
+      logger.error(`Command '${this.name}' is disabled but still called.`);
+      return;
+    }
+
     msg.channel.send(this.facts[Math.floor(Math.random() * this.facts.length)]);
 
     // react with otter-handsup

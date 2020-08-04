@@ -13,12 +13,14 @@ const app = express();
 app.use(bodyParser.json());
 
 // load in Database
+require('./config/PostgratorConfig')();
 const { sequelize } = require('./models');
 
 // load in MessageHandler
 const MessageHandler = require('./handlers/MessageHandler');
 
 const messageHandler = MessageHandler(process.env.PREFIX);
+
 appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
 
 const insightsClient = new appInsights.TelemetryClient(
@@ -61,13 +63,13 @@ process.on('uncaughtException', (err) => {
   insightsClient.trackException({
     exception: err
   });
-  logger.error(`Uncaught Exception: ${err.message}`);
+  logger.error(`Uncaught Exception: ${err.stack}`);
   // process.exit(1) Best practice is to exit app on errors so that Docker can restart automatically
 });
 
-process.on('unhandledRejection', (reason, promise) => {
+process.on('unhandledRejection', (err) => {
   insightsClient.trackException({
-    exception: promise
+    exception: err
   });
-  logger.error('Unhandled rejection at ', promise, `reason: ${reason}`);
+  logger.error(`Unhandled rejection: ${err.stack}`);
 });

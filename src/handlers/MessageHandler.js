@@ -19,8 +19,8 @@ const MessageHandler = (prefix) => {
     let msgString = msg.content;
 
     // Validate and remove prefix
-    if (msgString.startsWith(this.prefix)) {
-      msgString = msgString.replace(this.prefix, '');
+    if (msgString.startsWith(messageHandler.prefix)) {
+      msgString = msgString.replace(messageHandler.prefix, '');
     } else {
       return;
     }

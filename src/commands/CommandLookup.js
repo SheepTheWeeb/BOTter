@@ -72,8 +72,8 @@ const CommandLookup = () => {
       OtterRankCommand: new OtterRankCommand()
     };
 
-    this.commands = loadCommands(commands);
-    this.aliases = loadAlias(commands);
+    commandLookup.commands = loadCommands(commands);
+    commandLookup.aliases = loadAlias(commands);
   };
 
   /**
@@ -85,20 +85,20 @@ const CommandLookup = () => {
     let command = null;
 
     // exists is a function from commandLookup
-    if (!this.exists(commandName)) {
+    if (!commandLookup.exists(commandName)) {
       insightsClient.trackTrace('Command does not exist');
       return command;
     }
 
-    Object.keys(this.commands).forEach((e) => {
-      if (commandName === e && this.commands[e].enabled) {
-        command = this.commands[e];
+    Object.keys(commandLookup.commands).forEach((e) => {
+      if (commandName === e && commandLookup.commands[e].enabled) {
+        command = commandLookup.commands[e];
       }
     });
 
-    Object.keys(this.aliases).forEach((e) => {
-      if (commandName === e && this.aliases[e].enabled) {
-        command = this.aliases[e];
+    Object.keys(commandLookup.aliases).forEach((e) => {
+      if (commandName === e && commandLookup.aliases[e].enabled) {
+        command = commandLookup.aliases[e];
       }
     });
 
@@ -112,13 +112,13 @@ const CommandLookup = () => {
    */
   commandLookup.exists = (commandName) => {
     let found = false;
-    Object.keys(this.commands).forEach((e) => {
+    Object.keys(commandLookup.commands).forEach((e) => {
       if (commandName === e) {
         found = true;
       }
     });
 
-    Object.keys(this.aliases).forEach((e) => {
+    Object.keys(commandLookup.aliases).forEach((e) => {
       if (commandName === e) {
         found = true;
       }

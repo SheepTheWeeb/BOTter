@@ -15,7 +15,13 @@ class PingCommand extends Command {
     );
   }
 
-  static async execute(msg, args) {
+  async execute(msg, args) {
+    // check if command is enabled
+    if (!this.enabled) {
+      logger.error(`Command '${this.name}' is disabled but still called.`);
+      return;
+    }
+
     if (args.length === 0) {
       // test reply
       msg.reply(`Pong!, your command was: ${msg.content}`);

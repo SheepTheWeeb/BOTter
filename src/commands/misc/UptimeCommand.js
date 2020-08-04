@@ -17,6 +17,12 @@ class UptimeCommand extends Command {
   }
 
   async execute(msg) {
+    // check if command is enabled
+    if (!this.enabled) {
+      logger.error(`Command '${this.name}' is disabled but still called.`);
+      return;
+    }
+
     // calculate difference
     const diff = Date.now() - this.uptime;
 
