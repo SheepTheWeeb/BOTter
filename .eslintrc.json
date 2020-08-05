@@ -5,10 +5,7 @@
     "node": true
   },
   "extends": [
-    "airbnb-base",
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "prettier/standard"
   ],
@@ -16,7 +13,7 @@
   "parserOptions": {
     "ecmaVersion": 11
   },
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["node", "prettier"],
   "globals": {
     "emojiLookup": true,
     "commandLookup": true,
@@ -32,6 +29,26 @@
       "error",
       {
         "allowForLoopAfterthoughts": true
+      }
+    ],
+    "overrides": [
+      {
+        "files": ["**/*.ts"],
+        "parser": "@typescript-eslint/parser",
+        "extends": ["plugin:@typescript-eslint/recommended"],
+        "rules": {
+          "@typescript-eslint/no-non-null-assertion": "off",
+          "@typescript-eslint/no-use-before-define": "off",
+          "node/no-unsupported-features/es-syntax": "off",
+          "@typescript-eslint/explicit-function-return-type": "off",
+          "node/no-missing-import": "off",
+          "node/no-missing-require": "off",
+          "eqeqeq": [2, "smart"]
+        },
+        "parserOptions": {
+          "ecmaVersion": 2018,
+          "sourceType": "module"
+        }
       }
     ]
   }
