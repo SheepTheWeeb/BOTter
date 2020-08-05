@@ -37,7 +37,7 @@ client.on('ready', async () => {
   app.use('/api', require('./routes')(router, client));
   app.listen(process.env.PORT);
 
-  logger.info(`Logged in as ${client.user.tag}!`);
+  global.logger.info(`Logged in as ${client.user.tag}!`);
 });
 
 // use message handler to handle messages
@@ -50,23 +50,23 @@ client.login(process.env.DISCORD_TOKEN);
 
 /* eslint-disable-next-line no-unused-vars */
 app.use((err, req, res, next) => {
-  logger.error(err.stack);
+  global.logger.error(err.stack);
   res.sendStatus(500);
 });
 
 process.on('uncaughtException', (err) => {
-  insightsClient.trackException({
+  global.insightsClient.trackException({
     exception: err
   });
-  logger.error(`Uncaught Exception: ${err.message}`);
+  global.logger.error(`Uncaught Exception: ${err.message}`);
   console.log(err);
   // process.exit(1) Best practice is to exit app on errors so that Docker can restart automatically
 });
 
-process.on('unhandledRejection', (err) => {
-  insightsClient.trackException({
+process.on('unhandledRejection', (err: any) => {
+  global.insightsClient.trackException({
     exception: err
   });
-  logger.error(`Unhandled rejection: ${err.message}`);
+  global.logger.error(`Unhandled rejection: ${err.message}`);
   console.log(err);
 });

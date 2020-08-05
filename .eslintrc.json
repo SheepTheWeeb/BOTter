@@ -6,18 +6,22 @@
   },
   "extends": [
     "airbnb-base",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "prettier/standard"
   ],
-  "plugins": ["prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "plugins": ["@typescript-eslint", "prettier"],
   "globals": {
     "emojiLookup": true,
     "commandLookup": true,
     "logger": true,
     "insightsClient": true
-  },
-  "parserOptions": {
-    "ecmaVersion": 11
   },
   "rules": {
     "prettier/prettier": "error",
