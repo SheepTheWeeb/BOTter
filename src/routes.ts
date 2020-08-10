@@ -1,4 +1,4 @@
-const JiraWebhookHandler = require('./handlers/JiraWebhookHandler');
+import JiraWebhookHandler from './handlers/JiraWebhookHandler';
 
 export default (router: any, client: any) => {
   router.post(`/jira/${process.env.JIRA_SECRET}`, (req: any, res: any) => {

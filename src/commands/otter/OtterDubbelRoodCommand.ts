@@ -1,6 +1,7 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-const { user, redflag } = require('../../models');
+import { User } from '../../models/User';
+import { Redflag } from '../../models/Redflag';
 
 /**
  * You can give red flags/cards to people
@@ -58,7 +59,7 @@ export default class OtterDubbelRoodCommand extends Command {
     }
 
     // first look up if the user already exists in the database
-    let receiver = await user.findOne({
+    let receiver = await User.findOne({
       where: {
         discord_id: mentionedUser.id
       }
@@ -66,14 +67,14 @@ export default class OtterDubbelRoodCommand extends Command {
 
     // if it does not exist, create one
     if (!receiver) {
-      receiver = await user.create({
+      receiver = await User.create({
         discord_id: mentionedUser.id,
         discord_tag: mentionedUser.tag
       });
     }
 
-    // look up if the user that will give the redflag already exists in the database
-    let giver = await user.findOne({
+    // look up if the user that will give the Redflag already exists in the database
+    let giver = await User.findOne({
       where: {
         discord_id: msg.author.id
       }
@@ -81,14 +82,14 @@ export default class OtterDubbelRoodCommand extends Command {
 
     // if it does not exist, create one
     if (!giver) {
-      giver = await user.create({
+      giver = await User.create({
         discord_id: msg.author.id,
         discord_tag: msg.author.tag
       });
     }
 
     // save the rode kaart
-    await redflag.create({
+    await Redflag.create({
       user_id: receiver.id,
       received_from: giver.id,
       reason,

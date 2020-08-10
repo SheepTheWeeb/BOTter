@@ -1,9 +1,9 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
 
-const Discord = require('discord.js');
-const { user, redflag } = require('../../models');
-
+import Discord from 'discord.js';
+import { User } from '../../models/User';
+import { Redflag } from '../../models/Redflag';
 /**
  * gives the last 10 redflags
  */
@@ -52,7 +52,7 @@ export default class OtterKaartenCommand extends Command {
       }
 
       // look up the user
-      intendedUser = await user.findOne({
+      intendedUser = await User.findOne({
         where: {
           discord_id: mentionedUser.id
         }
@@ -61,7 +61,7 @@ export default class OtterKaartenCommand extends Command {
       taggedUser = msg.author.tag;
 
       // look up the user
-      intendedUser = await user.findOne({
+      intendedUser = await User.findOne({
         where: {
           discord_id: msg.author.id
         }
@@ -77,10 +77,10 @@ export default class OtterKaartenCommand extends Command {
     }
 
     // show last 10 redflags
-    const flags = await redflag.findAll({
+    const flags = await Redflag.findAll({
       include: [
         {
-          model: user,
+          model: User,
           as: 'giver',
           attributes: ['discord_tag']
         }

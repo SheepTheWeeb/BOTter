@@ -12,7 +12,7 @@ export default class MessageHandler {
    *
    * @param {*} msg The message that it reads from discord
    */
-  public handle(msg: any): void {
+  public async handle(msg: any) {
     // Stop if the message is from a bot
     if (msg.author.bot) return;
 
@@ -35,7 +35,7 @@ export default class MessageHandler {
       const command = commandLookup.get(primaryCommand);
 
       if (command !== null) {
-        command.execute(msg, args);
+        await command.execute(msg, args);
       }
     }
   }

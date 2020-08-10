@@ -1,6 +1,6 @@
 import Command from '../Command';
 import { commandLookup } from './../../app';
-const Discord = require('discord.js');
+import Discord from 'discord.js';
 
 /**
  * PingCommand class, this is the first command created for the bot

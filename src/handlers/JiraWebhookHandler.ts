@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
 import { emojiLookup } from './../app';
 
 export default {

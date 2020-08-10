@@ -1,8 +1,8 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-
-const { user, redflag } = require('../../models');
-
+import { User } from '../../models/User';
+import { Redflag } from '../../models/Redflag';
+import { Message } from 'discord.js';
 /**
  * You can give red flags/cards to people
  */
@@ -17,7 +17,7 @@ export default class OtterRoodCommand extends Command {
     );
   }
 
-  async execute(msg: any, args: Array<string>) {
+  async execute(msg: Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -50,7 +50,8 @@ export default class OtterRoodCommand extends Command {
     }
 
     // get mentioned user
-    const mentionedUser: any = msg.mentions.users.first();
+    const mentionedUser = msg.mentions.users.first();
+
     if (!mentionedUser) {
       msg.reply(
         "In order to give a 'rode kaart', you need to tag a valid user."
@@ -59,7 +60,7 @@ export default class OtterRoodCommand extends Command {
     }
 
     // look up if the user that will receive the redflag already exists in the database
-    let receiver: any = await user.findOne({
+    let receiver = await User.findOne({
       where: {
         discord_id: mentionedUser.id
       }
@@ -67,14 +68,14 @@ export default class OtterRoodCommand extends Command {
 
     // if it does not exist, create one
     if (!receiver) {
-      receiver = await user.create({
+      receiver = await User.create({
         discord_id: mentionedUser.id,
         discord_tag: mentionedUser.tag
       });
     }
 
     // look up if the user that will give the redflag already exists in the database
-    let giver: any = await user.findOne({
+    let giver = await User.findOne({
       where: {
         discord_id: msg.author.id
       }
@@ -82,14 +83,14 @@ export default class OtterRoodCommand extends Command {
 
     // if it does not exist, create one
     if (!giver) {
-      giver = await user.create({
+      giver = await User.create({
         discord_id: msg.author.id,
         discord_tag: msg.author.tag
       });
     }
 
     // save the rode kaart
-    await redflag.create({
+    await Redflag.create({
       user_id: receiver.id,
       received_from: giver.id,
       reason,

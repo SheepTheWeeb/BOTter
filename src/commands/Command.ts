@@ -22,7 +22,7 @@ export default class Command {
     this.enabled = enabled;
   }
 
-  public execute(msg: any, args: Array<string>): void {
+  async execute(msg: any, args: Array<string>) {
     throw new Error('command not implemented.');
   }
 }

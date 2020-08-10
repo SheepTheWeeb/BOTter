@@ -1,8 +1,8 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
 
-const axios = require('axios');
-const Discord = require('discord.js');
+import axios from 'axios';
+import Discord from 'discord.js';
 
 /**
  * Fetches an otter picture from r/otters

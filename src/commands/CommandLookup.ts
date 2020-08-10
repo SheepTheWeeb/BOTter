@@ -82,7 +82,7 @@ export default class CommandLookup {
     }
 
     if (command === null) {
-      insightsClient.trackTrace('Command does not exist');
+      insightsClient.trackTrace({ message: 'Command does not exist' });
     }
 
     return command;

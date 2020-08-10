@@ -1,7 +1,8 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-
-const { sequelize, redflag, user } = require('../../models');
+import { Sequelize } from 'sequelize';
+import { Redflag } from '../../models/Redflag';
+import { User } from '../../models/User';
 
 /**
  * You can give red flags/cards to people
@@ -57,13 +58,13 @@ export default class OtterRankCommand extends Command {
     }
 
     // get all normal redflags from each user
-    const highscore: any = await redflag.findAll({
+    const highscore: any = await Redflag.findAll({
       group: ['user_id'],
-      order: [[sequelize.literal('flags'), 'DESC']],
+      order: [[Sequelize.literal('flags'), 'DESC']],
       attributes: [
         'user_id',
         [
-          sequelize.literal(
+          Sequelize.literal(
             `SUM(CASE WHEN double_red = 0 THEN 1 WHEN double_red = 1 THEN 2 END)`
           ),
           'flags'
@@ -71,7 +72,7 @@ export default class OtterRankCommand extends Command {
       ],
       include: [
         {
-          model: user,
+          model: User,
           as: 'receiver',
           attributes: ['discord_id']
         }
