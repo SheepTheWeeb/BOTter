@@ -1,11 +1,13 @@
+import Command from '../Command';
+import { emojiLookup } from './../../app';
+
 const axios = require('axios');
 const Discord = require('discord.js');
-const Command = require('../Command');
 
 /**
  * Fetches an otter picture from r/otters
  */
-class OtterPicCommand extends Command {
+export default class OtterPicCommand extends Command {
   constructor() {
     super(
       'otter',
@@ -16,23 +18,23 @@ class OtterPicCommand extends Command {
     );
   }
 
-  async execute(msg) {
+  async execute(msg: any) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
     try {
       // make api call
-      const result = await axios.get(
+      const result: any = await axios.get(
         'https://www.reddit.com/r/Otters.json?limit=100'
       );
-      const posts = result.data.data.children;
+      const posts: Array<any> = result.data.data.children;
 
       // grab random post
-      let randomPost = '';
-      let attempts = 0;
+      let randomPost: string = '';
+      let attempts: number = 0;
       do {
         randomPost = posts[Math.floor(Math.random() * posts.length)].data.url;
         attempts += 1;
@@ -48,7 +50,7 @@ class OtterPicCommand extends Command {
       }
 
       // image found
-      const embed = new Discord.MessageEmbed()
+      const embed: any = new Discord.MessageEmbed()
         .setColor('#0088ff')
         .setTitle('Random Otter')
         .setImage(randomPost)
@@ -67,5 +69,3 @@ class OtterPicCommand extends Command {
     }
   }
 }
-
-module.exports = OtterPicCommand;

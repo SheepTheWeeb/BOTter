@@ -1,10 +1,12 @@
-const Command = require('../Command');
+import Command from '../Command';
+import { emojiLookup } from './../../app';
+
 const { user, redflag } = require('../../models');
 
 /**
  * You can give red flags/cards to people
  */
-class OtterRoodCommand extends Command {
+export default class OtterRoodCommand extends Command {
   constructor() {
     super(
       'rood',
@@ -15,17 +17,17 @@ class OtterRoodCommand extends Command {
     );
   }
 
-  async execute(msg, args) {
+  async execute(msg: any, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
     // grab the tagged user and reason of the rode kaart
-    const taggedUser = args[0];
+    const taggedUser: string = args[0];
     args.shift();
-    const reason = args.join(' ');
+    const reason: string | undefined = args.join(' ');
 
     // check if there is a reason
     if (!reason) {
@@ -48,7 +50,7 @@ class OtterRoodCommand extends Command {
     }
 
     // get mentioned user
-    const mentionedUser = msg.mentions.users.first();
+    const mentionedUser: any = msg.mentions.users.first();
     if (!mentionedUser) {
       msg.reply(
         "In order to give a 'rode kaart', you need to tag a valid user."
@@ -57,7 +59,7 @@ class OtterRoodCommand extends Command {
     }
 
     // look up if the user that will receive the redflag already exists in the database
-    let receiver = await user.findOne({
+    let receiver: any = await user.findOne({
       where: {
         discord_id: mentionedUser.id
       }
@@ -72,7 +74,7 @@ class OtterRoodCommand extends Command {
     }
 
     // look up if the user that will give the redflag already exists in the database
-    let giver = await user.findOne({
+    let giver: any = await user.findOne({
       where: {
         discord_id: msg.author.id
       }
@@ -98,5 +100,3 @@ class OtterRoodCommand extends Command {
     msg.channel.send(`Rood! ${emojiLookup.get('rode_kaart')}`);
   }
 }
-
-module.exports = OtterRoodCommand;

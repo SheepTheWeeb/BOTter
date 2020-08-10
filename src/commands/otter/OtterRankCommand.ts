@@ -1,10 +1,12 @@
-const Command = require('../Command');
+import Command from '../Command';
+import { emojiLookup } from './../../app';
+
 const { sequelize, redflag, user } = require('../../models');
 
 /**
  * You can give red flags/cards to people
  */
-class OtterRankCommand extends Command {
+export default class OtterRankCommand extends Command {
   constructor() {
     super(
       'rank',
@@ -15,20 +17,20 @@ class OtterRankCommand extends Command {
     );
   }
 
-  async execute(msg, args) {
+  async execute(msg: any, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
-    let intendedUserId;
-    let messagePart;
+    let intendedUserId: any;
+    let messagePart: string;
 
     // check if there are arguments
     if (args.length !== 0) {
       // grab first argument
-      const taggedUser = args[0];
+      const taggedUser: string = args[0];
 
       // check if it is a user
       if (!/^<@(!)?[0-9]+>$/i.test(taggedUser)) {
@@ -39,7 +41,7 @@ class OtterRankCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser = msg.mentions.users.first();
+      const mentionedUser: any = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
@@ -55,7 +57,7 @@ class OtterRankCommand extends Command {
     }
 
     // get all normal redflags from each user
-    const highscore = await redflag.findAll({
+    const highscore: any = await redflag.findAll({
       group: ['user_id'],
       order: [[sequelize.literal('flags'), 'DESC']],
       attributes: [
@@ -77,7 +79,7 @@ class OtterRankCommand extends Command {
     });
 
     // get the rank
-    let otterRank;
+    let otterRank: number | undefined;
     for (let i = 0; i < highscore.length; i++) {
       if (highscore[i].dataValues.receiver.discord_id === intendedUserId) {
         otterRank = i + 1;
@@ -97,5 +99,3 @@ class OtterRankCommand extends Command {
     }
   }
 }
-
-module.exports = OtterRankCommand;
