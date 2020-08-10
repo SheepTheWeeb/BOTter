@@ -9,11 +9,11 @@ export default class Command {
   enabled: boolean;
 
   constructor(
-    name = 'No name set.',
-    alias = [],
-    description = 'No description set.',
-    usage = 'No usage set.',
-    enabled = false
+    name: string = 'No name set.',
+    alias: Array<string> = [],
+    description: string = 'No description set.',
+    usage: string = 'No usage set.',
+    enabled: boolean = false
   ) {
     this.name = name;
     this.alias = alias;
