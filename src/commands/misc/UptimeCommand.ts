@@ -1,9 +1,11 @@
-const Command = require('../Command');
+import Command from '../Command';
 
 /**
  * Tells how long the bot has been running
  */
-class UptimeCommand extends Command {
+export default class UptimeCommand extends Command {
+  uptime: number;
+
   constructor() {
     super(
       'uptime',
@@ -16,24 +18,24 @@ class UptimeCommand extends Command {
     this.uptime = Date.now();
   }
 
-  async execute(msg) {
+  async execute(msg: any) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
     // calculate difference
-    const diff = Date.now() - this.uptime;
+    const diff: number = Date.now() - this.uptime;
 
     // calculate seconds, minutes, hours and days
-    const seconds = Math.floor((diff / 1000) % 60);
-    const minutes = Math.floor((diff / 1000 / 60) % 60);
-    const hours = Math.floor((diff / 1000 / 60 / 60) % 24);
-    const days = Math.floor(diff / 1000 / 60 / 60 / 24);
+    const seconds: number = Math.floor((diff / 1000) % 60);
+    const minutes: number = Math.floor((diff / 1000 / 60) % 60);
+    const hours: number = Math.floor((diff / 1000 / 60 / 60) % 24);
+    const days: number = Math.floor(diff / 1000 / 60 / 60 / 24);
 
     // create uptime message
-    let message = '';
+    let message: string = '';
 
     if (days > 0) {
       message += `${days} days, `;
@@ -52,5 +54,3 @@ class UptimeCommand extends Command {
     msg.react('🕒');
   }
 }
-
-module.exports = UptimeCommand;

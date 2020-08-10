@@ -1,9 +1,9 @@
-const Command = require('../Command');
+import Command from '../Command';
 
 /**
  * Calls you a pannekoek
  */
-class PannekoekCommand extends Command {
+export default class PannekoekCommand extends Command {
   constructor() {
     super(
       'pannekoek',
@@ -14,10 +14,10 @@ class PannekoekCommand extends Command {
     );
   }
 
-  async execute(msg) {
+  async execute(msg: any) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
@@ -25,5 +25,3 @@ class PannekoekCommand extends Command {
     msg.react('🥞');
   }
 }
-
-module.exports = PannekoekCommand;
