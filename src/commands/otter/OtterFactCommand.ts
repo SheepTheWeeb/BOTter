@@ -1,6 +1,7 @@
-const Command = require('../Command');
+import Command from '../Command';
+import { emojiLookup } from './../../app';
 
-const otterfacts = [
+const otterfacts: Array<string> = [
   'An otter shits 5 times a year.',
   'California’s southern sea otter has been listed as a threatened species under the Endangered Species Act since 1977.',
   'Currently the southern sea otter population is estimated at just above 3,000 animals.',
@@ -38,7 +39,9 @@ const otterfacts = [
 /**
  * Tells you a random otterfact
  */
-class OtterFactCommand extends Command {
+export default class OtterFactCommand extends Command {
+  facts: Array<string>;
+
   constructor() {
     super(
       'fact',
@@ -50,10 +53,10 @@ class OtterFactCommand extends Command {
     this.facts = otterfacts;
   }
 
-  async execute(msg) {
+  async execute(msg: any) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
@@ -67,5 +70,3 @@ class OtterFactCommand extends Command {
     }
   }
 }
-
-module.exports = OtterFactCommand;

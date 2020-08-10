@@ -42,7 +42,7 @@ export default class HelpCommand extends Command {
     }
 
     // create embed message
-    const embed = new Discord.MessageEmbed()
+    const embed: any = new Discord.MessageEmbed()
       .setColor('#0088ff')
       .setTitle('All commands + usage')
       .setTimestamp()

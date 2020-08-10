@@ -1,10 +1,11 @@
-const Command = require('../Command');
+import Command from '../Command';
+import { emojiLookup } from './../../app';
 const { user, redflag } = require('../../models');
 
 /**
  * You can give red flags/cards to people
  */
-class OtterDubbelRoodCommand extends Command {
+export default class OtterDubbelRoodCommand extends Command {
   constructor() {
     super(
       'dubbelrood',
@@ -15,17 +16,17 @@ class OtterDubbelRoodCommand extends Command {
     );
   }
 
-  async execute(msg, args) {
+  async execute(msg: any, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
     // grab the tagged user and reason of the rode kaart
-    const taggedUser = args[0];
+    const taggedUser: string = args[0];
     args.shift();
-    const reason = args.join(' ');
+    const reason: string = args.join(' ');
 
     // check if there is a reason
     if (!reason) {
@@ -48,7 +49,7 @@ class OtterDubbelRoodCommand extends Command {
     }
 
     // get mentioned user
-    const mentionedUser = msg.mentions.users.first();
+    const mentionedUser: any = msg.mentions.users.first();
     if (!mentionedUser) {
       msg.reply(
         "In order to give a 'rode kaart', you need to tag a valid user."
@@ -95,10 +96,8 @@ class OtterDubbelRoodCommand extends Command {
     });
 
     // send a reply message with an emoji
-    const dubbelRoodEmoji = emojiLookup.get('dubbel_rood');
+    const dubbelRoodEmoji: any = emojiLookup.get('dubbel_rood');
     msg.channel.send(`Dubbel rood! ${dubbelRoodEmoji}`);
     msg.react(dubbelRoodEmoji);
   }
 }
-
-module.exports = OtterDubbelRoodCommand;
