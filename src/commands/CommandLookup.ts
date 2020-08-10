@@ -13,7 +13,7 @@ import UptimeCommand from './misc/UptimeCommand';
 import OtterHighscoreCommand from './otter/OtterHighscoreCommand';
 import OtterRankCommand from './otter/OtterRankCommand';
 
-class CommandLookup {
+export default class CommandLookup {
   commands: Array<Command>;
 
   constructor() {
@@ -120,5 +120,3 @@ class CommandLookup {
     return found;
   }
 }
-
-export default CommandLookup;

@@ -1,7 +1,7 @@
 /**
  * Command class
  */
-class Command {
+export default class Command {
   name: string;
   alias: Array<string>;
   description: string;
@@ -21,7 +21,8 @@ class Command {
     this.usage = usage;
     this.enabled = enabled;
   }
-}
 
-// export class
-export default Command;
+  public execute(msg: any, args: Array<string>): void {
+    throw new Error('command not implemented.');
+  }
+}

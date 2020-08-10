@@ -5,6 +5,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 import routes from './routes';
+import MessageHandler from './handlers/MessageHandler';
+import EmojiLookup from './commands/EmojiLookup';
+import CommandLookup from './commands/CommandLookup';
 
 const client = new Discord.Client();
 const app = express();
@@ -14,8 +17,7 @@ app.use(bodyParser.json());
 require('./config/PostgratorConfig')();
 
 // load in MessageHandler
-const MessageHandler = require('./handlers/MessageHandler');
-const messageHandler = MessageHandler(process.env.PREFIX);
+const messageHandler = new MessageHandler(process.env.PREFIX);
 
 //Init Microsoft Application Insights
 appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
@@ -26,15 +28,15 @@ const insightsClient = new appInsights.TelemetryClient(
 export { insightsClient };
 
 // load in emojiLookup and commandlookup
-const emojiLookup = require('./commands/EmojiLookup')(client);
+const emojiLookup = new EmojiLookup(client);
 export { emojiLookup };
-const commandLookup = require('./commands/CommandLookup')(client);
+const commandLookup = new CommandLookup();
 export { commandLookup };
 
 // init discord client
 client.on('ready', async () => {
   // setup webhook handler
-  const router = express.Router();
+  let router: any = express.Router();
   app.use('/api', routes(router, client));
   app.listen(process.env.PORT);
 
