@@ -46,7 +46,7 @@ export default class CommandLookup {
   }
 
   public get(commandName: string): Command | null {
-    let command = null;
+    let command: Command | null = null;
 
     // exists is a function from commandLookup
     if (!this.exists(commandName)) {
@@ -61,7 +61,7 @@ export default class CommandLookup {
       }
     }
 
-    if (command !== null) {
+    if (command === null) {
       //look through command aliasses
       for (let i: number = 0; i < this.commands.length; i++) {
         if (!this.commands[i].enabled) {

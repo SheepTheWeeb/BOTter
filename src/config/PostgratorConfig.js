@@ -25,6 +25,6 @@ module.exports = () => {
 
   postgrator
     .migrate()
-    .then((appliedMigrations) => logger.info(appliedMigrations))
-    .catch((error) => logger.error(error));
+    .then((appliedMigrations) => console.log(appliedMigrations))
+    .catch((error) => console.log(error));
 };
