@@ -14,12 +14,6 @@
     "ecmaVersion": 11
   },
   "plugins": ["node", "prettier"],
-  "globals": {
-    "emojiLookup": true,
-    "commandLookup": true,
-    "logger": true,
-    "insightsClient": true
-  },
   "rules": {
     "prettier/prettier": "error",
     "no-console": "off",

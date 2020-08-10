@@ -19,8 +19,7 @@
     "express": "^4.17.1",
     "mysql2": "^2.1.0",
     "postgrator": "^4.0.1",
-    "sequelize": "^6.3.3",
-    "winston": "^3.3.3"
+    "sequelize": "^6.3.3"
   },
   "devDependencies": {
     "eslint": "^7.6.0",

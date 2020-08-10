@@ -2,9 +2,12 @@
  * Command class
  */
 class Command {
-  /**
-   * Constructor
-   */
+  name: string;
+  alias: Array<string>;
+  description: string;
+  usage: string;
+  enabled: boolean;
+
   constructor(
     name = 'No name set.',
     alias = [],
@@ -21,4 +24,4 @@ class Command {
 }
 
 // export class
-module.exports = Command;
+export default Command;

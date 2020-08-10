@@ -1,16 +1,11 @@
-import appInsights = require('applicationinsights');
-import Discord = require('discord.js');
-
 require('dotenv').config();
-
+const appInsights = require('applicationinsights');
+const Discord = require('discord.js');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// init logger
-const logger = require('./config/LoggerConfig');
-export logger;
+import routes from './routes';
 
-// init clients
 const client = new Discord.Client();
 const app = express();
 app.use(bodyParser.json());
@@ -20,31 +15,34 @@ require('./config/PostgratorConfig')();
 
 // load in MessageHandler
 const MessageHandler = require('./handlers/MessageHandler');
-
 const messageHandler = MessageHandler(process.env.PREFIX);
 
+//Init Microsoft Application Insights
 appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
 
-insightsClient = new appInsights.TelemetryClient(
+const insightsClient = new appInsights.TelemetryClient(
   process.env.APPINSIGHTS_INSTRUMENTATIONKEY
 );
+export { insightsClient };
+
+// load in emojiLookup and commandlookup
+const emojiLookup = require('./commands/EmojiLookup')(client);
+export { emojiLookup };
+const commandLookup = require('./commands/CommandLookup')(client);
+export { commandLookup };
 
 // init discord client
 client.on('ready', async () => {
-  // load in emojiLookup and commandlookup
-  emojiLookup = require('./commands/EmojiLookup')(client);
-  commandLookup = require('./commands/CommandLookup')(client);
-
   // setup webhook handler
   const router = express.Router();
-  app.use('/api', require('./routes')(router, client));
+  app.use('/api', routes(router, client));
   app.listen(process.env.PORT);
 
-  logger.info(`Logged in as ${client.user.tag}!`);
+  console.log(`Logged in as ${client.user.tag}!`);
 });
 
 // use message handler to handle messages
-client.on('message', (msg) => {
+client.on('message', (msg: any) => {
   messageHandler.handle(msg);
 });
 
@@ -52,24 +50,22 @@ client.on('message', (msg) => {
 client.login(process.env.DISCORD_TOKEN);
 
 /* eslint-disable-next-line no-unused-vars */
-app.use((err, req, res, next) => {
-  logger.error(err.stack);
+app.use((err: Error, req: any, res: any, next: any) => {
+  console.log(err.message);
   res.sendStatus(500);
 });
 
-process.on('uncaughtException', (err) => {
+process.on('uncaughtException', (err: Error) => {
   insightsClient.trackException({
     exception: err
   });
-  logger.error(`Uncaught Exception: ${err.message}`);
-  console.log(err);
+  console.log(`Uncaught Exception: ${err.message}`);
   // process.exit(1) Best practice is to exit app on errors so that Docker can restart automatically
 });
 
-process.on('unhandledRejection', (err: any) => {
+process.on('unhandledRejection', (err: Error) => {
   insightsClient.trackException({
     exception: err
   });
-  logger.error(`Unhandled rejection: ${err.message}`);
-  console.log(err);
+  console.log(`Unhandled rejection: ${err.message}`);
 });
