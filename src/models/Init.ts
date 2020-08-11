@@ -54,13 +54,6 @@ export function initializeDb() {
     }
   );
 
-  // TODO: this got broken in the process of converting to TS
-  // Redflag.belongsTo(User, { foreignKey: 'user_id', as: 'receiver' });
-  // Redflag.belongsTo(User, {
-  //   foreignKey: 'received_from',
-  //   as: 'giver'
-  // });
-
   User.init(
     {
       id: {
@@ -98,5 +91,11 @@ export function initializeDb() {
   });
   User.hasMany(Redflag, {
     foreignKey: 'received_from'
+  });
+
+  Redflag.belongsTo(User, { foreignKey: 'user_id', as: 'receiver' });
+  Redflag.belongsTo(User, {
+    foreignKey: 'received_from',
+    as: 'giver'
   });
 }
