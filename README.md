@@ -122,10 +122,6 @@ Most important dependencies:
 - [Discord js](https://discord.js.org/#/)
 - [Sequelize](https://sequelize.org/)
 
-## Design patterns
-
-- Factory Pattern
-
 ## Version control
 
 - [Github](https://github.com/)
