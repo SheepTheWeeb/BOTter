@@ -10,11 +10,11 @@ module.exports = {
         allowNull: false
       },
       discord_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       discord_tag: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       created_at: {
@@ -59,7 +59,7 @@ module.exports = {
         onDelete: 'cascade'
       },
       reason: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       double_red: {
