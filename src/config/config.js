@@ -6,6 +6,7 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
+    port: 3306,
     dialect: 'mysql'
   },
   test: {
@@ -13,6 +14,7 @@ module.exports = {
     password: null,
     database: 'database_test',
     host: '127.0.0.1',
+    port: 3306,
     dialect: 'mysql'
   },
   production: {

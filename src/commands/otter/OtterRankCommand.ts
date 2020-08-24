@@ -1,10 +1,13 @@
-const Command = require('../Command');
-const { sequelize, redflag, user } = require('../../models');
+import Command from '../Command';
+import { emojiLookup } from './../../app';
+import { Sequelize } from 'sequelize';
+import { Redflag } from '../../models/Redflag';
+import { Otteruser } from '../../models/Otteruser';
 
 /**
  * You can give red flags/cards to people
  */
-class OtterRankCommand extends Command {
+export default class OtterRankCommand extends Command {
   constructor() {
     super(
       'rank',
@@ -15,20 +18,20 @@ class OtterRankCommand extends Command {
     );
   }
 
-  async execute(msg, args) {
+  async execute(msg: any, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
-    let intendedUserId;
-    let messagePart;
+    let intendedUserId: any;
+    let messagePart: string;
 
     // check if there are arguments
     if (args.length !== 0) {
       // grab first argument
-      const taggedUser = args[0];
+      const taggedUser: string = args[0];
 
       // check if it is a user
       if (!/^<@(!)?[0-9]+>$/i.test(taggedUser)) {
@@ -39,7 +42,7 @@ class OtterRankCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser = msg.mentions.users.first();
+      const mentionedUser: any = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
@@ -55,13 +58,13 @@ class OtterRankCommand extends Command {
     }
 
     // get all normal redflags from each user
-    const highscore = await redflag.findAll({
+    const highscore: any = await Redflag.findAll({
       group: ['user_id'],
-      order: [[sequelize.literal('flags'), 'DESC']],
+      order: [[Sequelize.literal('flags'), 'DESC']],
       attributes: [
         'user_id',
         [
-          sequelize.literal(
+          Sequelize.literal(
             `SUM(CASE WHEN double_red = 0 THEN 1 WHEN double_red = 1 THEN 2 END)`
           ),
           'flags'
@@ -69,7 +72,7 @@ class OtterRankCommand extends Command {
       ],
       include: [
         {
-          model: user,
+          model: Otteruser,
           as: 'receiver',
           attributes: ['discord_id']
         }
@@ -77,7 +80,7 @@ class OtterRankCommand extends Command {
     });
 
     // get the rank
-    let otterRank;
+    let otterRank: number | undefined;
     for (let i = 0; i < highscore.length; i++) {
       if (highscore[i].dataValues.receiver.discord_id === intendedUserId) {
         otterRank = i + 1;
@@ -97,5 +100,3 @@ class OtterRankCommand extends Command {
     }
   }
 }
-
-module.exports = OtterRankCommand;

@@ -1,11 +1,14 @@
-const Discord = require('discord.js');
-const Command = require('../Command');
-const { sequelize, redflag, user } = require('../../models');
+import Command from '../Command';
+import { emojiLookup } from './../../app';
 
+import Discord from 'discord.js';
+import { Redflag } from '../../models/Redflag';
+import { Otteruser } from '../../models/Otteruser';
+import { Sequelize } from 'sequelize';
 /**
  * You can give red flags/cards to people
  */
-class OtterHighscoreCommand extends Command {
+export default class OtterHighscoreCommand extends Command {
   constructor() {
     super(
       'highscore',
@@ -16,21 +19,21 @@ class OtterHighscoreCommand extends Command {
     );
   }
 
-  async execute(msg) {
+  async execute(msg: any) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
     // get all normal redflags from each user
-    const highscore = await redflag.findAll({
+    const highscore: any = await Redflag.findAll({
       group: ['user_id'],
-      order: [[sequelize.literal('flags'), 'DESC']],
+      order: [[Sequelize.literal('flags'), 'DESC']],
       attributes: [
         'user_id',
         [
-          sequelize.literal(
+          Sequelize.literal(
             `SUM(CASE WHEN double_red = 0 THEN 1 WHEN double_red = 1 THEN 2 END)`
           ),
           'flags'
@@ -38,7 +41,7 @@ class OtterHighscoreCommand extends Command {
       ],
       include: [
         {
-          model: user,
+          model: Otteruser,
           as: 'receiver',
           attributes: ['discord_tag']
         }
@@ -47,15 +50,15 @@ class OtterHighscoreCommand extends Command {
     });
 
     // create message
-    let highscoreString = '';
-    for (let i = 0; i < highscore.length; i++) {
+    let highscoreString: string = '';
+    for (let i: number = 0; i < highscore.length; i++) {
       highscoreString += `\n**${i + 1}.** Otter: **${
         highscore[i].dataValues.receiver.discord_tag
       }** - Flags: **${highscore[i].dataValues.flags}**`;
     }
 
     // create embed message
-    const embed = new Discord.MessageEmbed()
+    const embed: any = new Discord.MessageEmbed()
       .setColor('#0088ff')
       .setTitle(`Highscore Redflag ${emojiLookup.get('rode_kaart')}`)
       .setTimestamp()
@@ -66,5 +69,3 @@ class OtterHighscoreCommand extends Command {
     msg.react(emojiLookup.get('rode_kaart'));
   }
 }
-
-module.exports = OtterHighscoreCommand;

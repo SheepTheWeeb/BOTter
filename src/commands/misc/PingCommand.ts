@@ -1,10 +1,11 @@
-const Command = require('../Command');
+import Command from '../Command';
+import { emojiLookup } from './../../app';
 
 /**
  * PingCommand class, this is the first command created for the bot
  * It simply replies with 'Pong!' when you type this command.
  */
-class PingCommand extends Command {
+export default class PingCommand extends Command {
   constructor() {
     super(
       'ping',
@@ -15,10 +16,10 @@ class PingCommand extends Command {
     );
   }
 
-  async execute(msg, args) {
+  async execute(msg: any, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
@@ -35,5 +36,3 @@ class PingCommand extends Command {
     }
   }
 }
-
-module.exports = PingCommand;

@@ -1,11 +1,12 @@
-const Discord = require('discord.js');
-const Command = require('../Command');
+import Command from '../Command';
+import { commandLookup } from './../../app';
+import Discord from 'discord.js';
 
 /**
  * PingCommand class, this is the first command created for the bot
  * It simply replies with 'Pong!' when you type this command.
  */
-class HelpCommand extends Command {
+export default class HelpCommand extends Command {
   constructor() {
     super(
       'help',
@@ -16,32 +17,32 @@ class HelpCommand extends Command {
     );
   }
 
-  async execute(msg) {
+  async execute(msg: any) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
     // grab all commands
     const { commands } = commandLookup;
-    const MAX_MESSAGE_LENGTH = 1000;
+    const MAX_MESSAGE_LENGTH: number = 1000;
 
     // create string with command + usage
-    let commandString = '';
-    Object.keys(commands).forEach((e) => {
-      if (commands[e].enabled) {
-        let aliases = '';
-        commands[e].alias.forEach((name) => {
+    let commandString: string = '';
+    for (let i: number = 0; i < commands.length; i++) {
+      if (commands[i].enabled) {
+        let aliases: string = '';
+        commands[i].alias.forEach((name: string) => {
           aliases += `| **${name}** `;
         });
 
-        commandString += `\n**${commands[e].name}** ${aliases}- ${commands[e].usage} - ${commands[e].description}`;
+        commandString += `\n**${commands[i].name}** ${aliases}- ${commands[i].usage} - ${commands[i].description}`;
       }
-    });
+    }
 
     // create embed message
-    const embed = new Discord.MessageEmbed()
+    const embed: any = new Discord.MessageEmbed()
       .setColor('#0088ff')
       .setTitle('All commands + usage')
       .setTimestamp()
@@ -50,13 +51,13 @@ class HelpCommand extends Command {
     // check if message is too large for discord
     if (commandString.length >= MAX_MESSAGE_LENGTH) {
       // split the message and create a charactercounter
-      const parts = commandString.split('\n');
+      const parts: Array<string> = commandString.split('\n');
       parts.shift();
-      let characterCount = 0;
-      let newCommandString = '';
+      let characterCount: number = 0;
+      let newCommandString: string = '';
 
       // for every sentence
-      for (let i = 0; i < parts.length; i++) {
+      for (let i: number = 0; i < parts.length; i++) {
         // add line length to count
         characterCount += parts[i].length;
         newCommandString += `\n${parts[i]}`;
@@ -85,5 +86,3 @@ class HelpCommand extends Command {
     }
   }
 }
-
-module.exports = HelpCommand;

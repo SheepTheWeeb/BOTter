@@ -1,31 +1,33 @@
-const Command = require('../Command');
-const { user, redflag } = require('../../models');
-
+import Command from '../Command';
+import { emojiLookup } from './../../app';
+import { Otteruser } from '../../models/Otteruser';
+import { Redflag } from '../../models/Redflag';
+import { Message } from 'discord.js';
 /**
  * You can give red flags/cards to people
  */
-class OtterDubbelRoodCommand extends Command {
+export default class OtterRoodCommand extends Command {
   constructor() {
     super(
-      'dubbelrood',
-      ['dubbel'],
-      'Gives 2 times a red card to someone.',
-      `${process.env.PREFIX}dubbelrood <user> <reason>`,
+      'rood',
+      ['rodekaart', 'kaart'],
+      'Gives red card to someone.',
+      `${process.env.PREFIX}rood <user> <reason>`,
       true
     );
   }
 
-  async execute(msg, args) {
+  async execute(msg: Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
     // grab the tagged user and reason of the rode kaart
-    const taggedUser = args[0];
+    const taggedUser: string = args[0];
     args.shift();
-    const reason = args.join(' ');
+    const reason: string | undefined = args.join(' ');
 
     // check if there is a reason
     if (!reason) {
@@ -49,6 +51,7 @@ class OtterDubbelRoodCommand extends Command {
 
     // get mentioned user
     const mentionedUser = msg.mentions.users.first();
+
     if (!mentionedUser) {
       msg.reply(
         "In order to give a 'rode kaart', you need to tag a valid user."
@@ -56,8 +59,8 @@ class OtterDubbelRoodCommand extends Command {
       return;
     }
 
-    // first look up if the user already exists in the database
-    let receiver = await user.findOne({
+    // look up if the user that will receive the redflag already exists in the database
+    let receiver = await Otteruser.findOne({
       where: {
         discord_id: mentionedUser.id
       }
@@ -65,14 +68,14 @@ class OtterDubbelRoodCommand extends Command {
 
     // if it does not exist, create one
     if (!receiver) {
-      receiver = await user.create({
+      receiver = await Otteruser.create({
         discord_id: mentionedUser.id,
         discord_tag: mentionedUser.tag
       });
     }
 
     // look up if the user that will give the redflag already exists in the database
-    let giver = await user.findOne({
+    let giver = await Otteruser.findOne({
       where: {
         discord_id: msg.author.id
       }
@@ -80,25 +83,21 @@ class OtterDubbelRoodCommand extends Command {
 
     // if it does not exist, create one
     if (!giver) {
-      giver = await user.create({
+      giver = await Otteruser.create({
         discord_id: msg.author.id,
         discord_tag: msg.author.tag
       });
     }
 
     // save the rode kaart
-    await redflag.create({
+    await Redflag.create({
       user_id: receiver.id,
       received_from: giver.id,
       reason,
-      double_red: true
+      double_red: false
     });
 
     // send a reply message with an emoji
-    const dubbelRoodEmoji = emojiLookup.get('dubbel_rood');
-    msg.channel.send(`Dubbel rood! ${dubbelRoodEmoji}`);
-    msg.react(dubbelRoodEmoji);
+    msg.channel.send(`Rood! ${emojiLookup.get('rode_kaart')}`);
   }
 }
-
-module.exports = OtterDubbelRoodCommand;

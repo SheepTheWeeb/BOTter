@@ -1,21 +1,22 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
+import { emojiLookup } from './../app';
 
-module.exports = {
-  async handle(req, res, client) {
+export default {
+  async handle(req: any, res: any, client: any) {
     // grab otter discord server and log channel
-    const otterGuild = client.guilds.cache.find(
-      (guild) => guild.id === '730511256682889319'
+    const otterGuild: any = client.guilds.cache.find(
+      (guild: any) => guild.id === '730511256682889319'
     );
-    const logChannel = otterGuild.channels.cache.find(
-      (channel) => channel.id === '738358619032256593'
+    const logChannel: any = otterGuild.channels.cache.find(
+      (channel: any) => channel.id === '738358619032256593'
     );
 
     // only grab first name and picture
-    const jiraName = req.body.user.displayName.split(' ')[0];
-    const jiraPics = req.body.user.avatarUrls;
+    const jiraName: string = req.body.user.displayName.split(' ')[0];
+    const jiraPics: any = req.body.user.avatarUrls;
 
     // create readable message fore webhookevent type
-    let eventType = '';
+    let eventType: string = '';
     switch (req.body.webhookEvent) {
       case 'jira:issue_created':
         eventType = 'Ticket Created';
@@ -44,7 +45,7 @@ module.exports = {
     // check if there is a changelog
     if (req.body.changelog) {
       // put every change into a field
-      req.body.changelog.items.forEach((item) => {
+      req.body.changelog.items.forEach((item: any) => {
         // to prevent doxxing :monkaS:
         if (item.field === 'reporter') return;
         if (item.field === 'assignee') return;

@@ -1,10 +1,12 @@
-const Command = require('../Command');
-const { user, redflag } = require('../../models');
+import Command from '../Command';
+import { emojiLookup } from './../../app';
+import { Otteruser } from '../../models/Otteruser';
+import { Redflag } from '../../models/Redflag';
 
 /**
  * gives the last 10 redflags
  */
-class OtterTotaalKaartenCommand extends Command {
+export default class OtterTotaalKaartenCommand extends Command {
   constructor() {
     super(
       'totaalkaarten',
@@ -15,21 +17,21 @@ class OtterTotaalKaartenCommand extends Command {
     );
   }
 
-  async execute(msg, args) {
+  async execute(msg: any, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
-      logger.error(`Command '${this.name}' is disabled but still called.`);
+      console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
-    let intendedUser;
-    let messagePart = '';
-    let taggedUser;
+    let intendedUser: any;
+    let messagePart: string = '';
+    let taggedUser: string;
 
     // check if there are arguments
     if (args.length !== 0) {
       // grab first argument
-      const FIRST_INDEX = 0;
+      const FIRST_INDEX: number = 0;
       taggedUser = args[FIRST_INDEX];
 
       // check if it is a user
@@ -41,7 +43,7 @@ class OtterTotaalKaartenCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser = msg.mentions.users.first();
+      const mentionedUser: any = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
@@ -50,7 +52,7 @@ class OtterTotaalKaartenCommand extends Command {
       }
 
       // look up the user
-      intendedUser = await user.findOne({
+      intendedUser = await Otteruser.findOne({
         where: {
           discord_id: mentionedUser.id
         }
@@ -61,7 +63,7 @@ class OtterTotaalKaartenCommand extends Command {
       taggedUser = msg.author.tag;
 
       // look up the user
-      intendedUser = await user.findOne({
+      intendedUser = await Otteruser.findOne({
         where: {
           discord_id: msg.author.id
         }
@@ -79,17 +81,17 @@ class OtterTotaalKaartenCommand extends Command {
     }
 
     // show last 10 redflags
-    const flags = await redflag.findAll({
+    const flags: any = await Redflag.findAll({
       where: {
         user_id: intendedUser.id
       },
       attributes: ['double_red']
     });
 
-    const thinkEmoji = emojiLookup.get('otterthink');
+    const thinkEmoji: any = emojiLookup.get('otterthink');
 
-    let count = 0;
-    flags.forEach((flag) => {
+    let count: number = 0;
+    flags.forEach((flag: any) => {
       if (flag.double_red) {
         count += 2;
       } else {
@@ -102,5 +104,3 @@ class OtterTotaalKaartenCommand extends Command {
     msg.react(thinkEmoji);
   }
 }
-
-module.exports = OtterTotaalKaartenCommand;
