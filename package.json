@@ -6,6 +6,8 @@
   "scripts": {
     "start": "tsc && node build/app.js",
     "start:dev": "nodemon",
+    "migrate": "sequelize-cli db:migrate",
+    "postinstall": "npm run migrate & npm run build",
     "build": "tsc"
   },
   "author": "Schaap",
@@ -18,7 +20,9 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mysql2": "^2.1.0",
-    "sequelize": "^6.3.3"
+    "sequelize": "^6.3.3",
+    "typescript": "^3.9.7",
+    "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
@@ -32,9 +36,6 @@
     "eslint-plugin-prettier": "^3.1.4",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
-    "rimraf": "^3.0.2",
-    "sequelize-cli": "^6.2.0",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.7"
+    "ts-node": "^8.10.2"
   }
 }
