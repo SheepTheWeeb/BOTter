@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: Sequelize.literal(
-          'CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)'
+          'CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()'
         )
       }
     });
@@ -75,7 +75,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: Sequelize.literal(
-          'CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)'
+          'CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()'
         )
       }
     });
