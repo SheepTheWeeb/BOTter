@@ -16,8 +16,8 @@
     "rootDir": "./src",
     "types": ["node"],
     "esModuleInterop": true,
-    "allowJs": false
+    "allowJs": true
   },
   "exclude": ["node_modules"],
-  "include": ["src/**/*.ts", "src/config/config.js"]
+  "include": ["src/**/*"]
 }
