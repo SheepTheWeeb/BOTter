@@ -1,25 +1,21 @@
 import { DataTypes, Sequelize } from 'sequelize';
 import { Model } from 'sequelize';
-import { Otteruser } from './Otteruser';
+import { Redflag } from './Redflag';
 
-export interface IRedflag {
+export interface IOtteruser {
   id?: number;
-  user_id: number;
-  received_from: number;
-  reason: string;
-  double_red: boolean;
+  discord_id: string;
+  discord_tag: string;
   created_at?: Date;
   updated_at?: Date;
 }
 
-export class Redflag extends Model implements IRedflag {
-  public static readonly TableName: string = 'redflag';
+export class Otteruser extends Model implements IOtteruser {
+  public static readonly TableName: string = 'otteruser';
 
   public id!: number;
-  public user_id!: number;
-  public received_from!: number;
-  public reason!: string;
-  public double_red!: boolean;
+  public discord_id!: string;
+  public discord_tag!: string;
   public created_at!: Date;
   public updated_at!: Date;
 
@@ -32,20 +28,12 @@ export class Redflag extends Model implements IRedflag {
           autoIncrement: true,
           allowNull: false
         },
-        user_id: {
-          type: DataTypes.INTEGER,
-          allowNull: false
-        },
-        received_from: {
-          type: DataTypes.INTEGER,
-          allowNull: false
-        },
-        reason: {
+        discord_id: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        double_red: {
-          type: DataTypes.BOOLEAN,
+        discord_tag: {
+          type: DataTypes.STRING,
           allowNull: false
         },
         created_at: {
@@ -66,10 +54,11 @@ export class Redflag extends Model implements IRedflag {
   }
 
   public static setAssociations() {
-    this.belongsTo(Otteruser, { foreignKey: 'user_id', as: 'receiver' });
-    this.belongsTo(Otteruser, {
-      foreignKey: 'received_from',
-      as: 'giver'
+    this.hasMany(Redflag, {
+      foreignKey: 'user_id'
+    });
+    this.hasMany(Redflag, {
+      foreignKey: 'received_from'
     });
   }
 }

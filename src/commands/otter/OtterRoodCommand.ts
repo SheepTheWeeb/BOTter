@@ -1,6 +1,6 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-import { User } from '../../models/User';
+import { Otteruser } from '../../models/Otteruser';
 import { Redflag } from '../../models/Redflag';
 import { Message } from 'discord.js';
 /**
@@ -60,7 +60,7 @@ export default class OtterRoodCommand extends Command {
     }
 
     // look up if the user that will receive the redflag already exists in the database
-    let receiver = await User.findOne({
+    let receiver = await Otteruser.findOne({
       where: {
         discord_id: mentionedUser.id
       }
@@ -68,14 +68,14 @@ export default class OtterRoodCommand extends Command {
 
     // if it does not exist, create one
     if (!receiver) {
-      receiver = await User.create({
+      receiver = await Otteruser.create({
         discord_id: mentionedUser.id,
         discord_tag: mentionedUser.tag
       });
     }
 
     // look up if the user that will give the redflag already exists in the database
-    let giver = await User.findOne({
+    let giver = await Otteruser.findOne({
       where: {
         discord_id: msg.author.id
       }
@@ -83,7 +83,7 @@ export default class OtterRoodCommand extends Command {
 
     // if it does not exist, create one
     if (!giver) {
-      giver = await User.create({
+      giver = await Otteruser.create({
         discord_id: msg.author.id,
         discord_tag: msg.author.tag
       });

@@ -2,7 +2,7 @@ import Command from '../Command';
 import { emojiLookup } from './../../app';
 import { Sequelize } from 'sequelize';
 import { Redflag } from '../../models/Redflag';
-import { User } from '../../models/User';
+import { Otteruser } from '../../models/Otteruser';
 
 /**
  * You can give red flags/cards to people
@@ -72,7 +72,7 @@ export default class OtterRankCommand extends Command {
       ],
       include: [
         {
-          model: User,
+          model: Otteruser,
           as: 'receiver',
           attributes: ['discord_id']
         }

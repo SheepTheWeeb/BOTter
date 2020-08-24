@@ -3,7 +3,7 @@ import { emojiLookup } from './../../app';
 
 import Discord from 'discord.js';
 import { Redflag } from '../../models/Redflag';
-import { User } from '../../models/User';
+import { Otteruser } from '../../models/Otteruser';
 import { Sequelize } from 'sequelize';
 /**
  * You can give red flags/cards to people
@@ -41,7 +41,7 @@ export default class OtterHighscoreCommand extends Command {
       ],
       include: [
         {
-          model: User,
+          model: Otteruser,
           as: 'receiver',
           attributes: ['discord_tag']
         }

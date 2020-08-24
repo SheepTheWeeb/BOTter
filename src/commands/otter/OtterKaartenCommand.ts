@@ -2,7 +2,7 @@ import Command from '../Command';
 import { emojiLookup } from './../../app';
 
 import Discord from 'discord.js';
-import { User } from '../../models/User';
+import { Otteruser } from '../../models/Otteruser';
 import { Redflag } from '../../models/Redflag';
 /**
  * gives the last 10 redflags
@@ -52,7 +52,7 @@ export default class OtterKaartenCommand extends Command {
       }
 
       // look up the user
-      intendedUser = await User.findOne({
+      intendedUser = await Otteruser.findOne({
         where: {
           discord_id: mentionedUser.id
         }
@@ -61,7 +61,7 @@ export default class OtterKaartenCommand extends Command {
       taggedUser = msg.author.tag;
 
       // look up the user
-      intendedUser = await User.findOne({
+      intendedUser = await Otteruser.findOne({
         where: {
           discord_id: msg.author.id
         }
@@ -80,7 +80,7 @@ export default class OtterKaartenCommand extends Command {
     const flags = await Redflag.findAll({
       include: [
         {
-          model: User,
+          model: Otteruser,
           as: 'giver',
           attributes: ['discord_tag']
         }

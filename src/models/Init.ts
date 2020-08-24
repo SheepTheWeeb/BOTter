@@ -1,6 +1,6 @@
 import { Redflag } from './Redflag';
-import { DataTypes, Sequelize } from 'sequelize';
-import { User } from './User';
+import { Sequelize } from 'sequelize';
+import { Otteruser } from './Otteruser';
 import config from '../config/config';
 
 export function initializeDb() {
@@ -14,88 +14,9 @@ export function initializeDb() {
     { host: envConfig.host!, port: envConfig.port!, dialect: 'mysql' }
   );
 
-  Redflag.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      received_from: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      reason: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      double_red: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: true
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        allowNull: true
-      }
-    },
-    {
-      sequelize,
-      tableName: 'redflag',
-      underscored: true
-    }
-  );
+  Otteruser.prepareInit(sequelize);
+  Redflag.prepareInit(sequelize);
 
-  User.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false
-      },
-      discord_id: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      discord_tag: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: true
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        allowNull: true
-      }
-    },
-    {
-      sequelize,
-      tableName: 'user',
-      underscored: true
-    }
-  );
-
-  User.hasMany(Redflag, {
-    foreignKey: 'user_id'
-  });
-  User.hasMany(Redflag, {
-    foreignKey: 'received_from'
-  });
-
-  Redflag.belongsTo(User, { foreignKey: 'user_id', as: 'receiver' });
-  Redflag.belongsTo(User, {
-    foreignKey: 'received_from',
-    as: 'giver'
-  });
+  Otteruser.setAssociations();
+  Redflag.setAssociations();
 }

@@ -1,6 +1,6 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-import { User } from '../../models/User';
+import { Otteruser } from '../../models/Otteruser';
 import { Redflag } from '../../models/Redflag';
 
 /**
@@ -52,7 +52,7 @@ export default class OtterTotaalKaartenCommand extends Command {
       }
 
       // look up the user
-      intendedUser = await User.findOne({
+      intendedUser = await Otteruser.findOne({
         where: {
           discord_id: mentionedUser.id
         }
@@ -63,7 +63,7 @@ export default class OtterTotaalKaartenCommand extends Command {
       taggedUser = msg.author.tag;
 
       // look up the user
-      intendedUser = await User.findOne({
+      intendedUser = await Otteruser.findOne({
         where: {
           discord_id: msg.author.id
         }
