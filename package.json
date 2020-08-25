@@ -21,21 +21,20 @@
     "express": "^4.17.1",
     "mysql2": "^2.1.0",
     "sequelize": "^6.3.3",
+    "sequelize-cli": "^6.2.0",
     "typescript": "^3.9.7",
-    "sequelize-cli": "^6.2.0"
-  },
-  "devDependencies": {
     "@types/body-parser": "^1.19.0",
     "@types/express": "^4.17.7",
     "@types/node": "^14.0.27",
     "@types/validator": "^13.1.0",
-    "@types/ws": "^7.2.6",
+    "@types/ws": "^7.2.6"
+  },
+  "devDependencies": {
     "eslint": "^7.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
     "nodemon": "^2.0.4",
-    "prettier": "^2.0.5",
-    "ts-node": "^8.10.2"
+    "prettier": "^2.0.5"
   }
 }
