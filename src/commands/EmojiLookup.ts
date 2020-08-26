@@ -15,7 +15,6 @@ export default class EmojiLookup {
   public init() {
     let emojis: Array<Discord.GuildEmoji> = [];
     this.client.guilds.cache.forEach((guild: Discord.Guild) => {
-      console.log(guild);
       guild.emojis.cache.forEach((emoji: Discord.GuildEmoji) => {
         emojis.push(emoji);
       });
