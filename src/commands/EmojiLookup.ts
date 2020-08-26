@@ -9,9 +9,13 @@ export default class EmojiLookup {
 
   constructor(client: Discord.Client) {
     this.client = client;
+    this.emojis = [];
+  }
 
+  public init() {
     let emojis: Array<Discord.GuildEmoji> = [];
-    client.guilds.cache.forEach((guild: Discord.Guild) => {
+    this.client.guilds.cache.forEach((guild: Discord.Guild) => {
+      console.log(guild);
       guild.emojis.cache.forEach((emoji: Discord.GuildEmoji) => {
         emojis.push(emoji);
       });

@@ -5,7 +5,7 @@ import config from '../config/config';
 
 export function initializeDb() {
   const env: string = process.env.NODE_ENV || 'development';
-  const envConfig = config[env as keyof typeof config];
+  const envConfig = config[env];
 
   const sequelize: Sequelize = new Sequelize(
     envConfig.database!,

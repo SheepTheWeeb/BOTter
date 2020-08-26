@@ -44,7 +44,9 @@ export default class OtterTotaalKaartenCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
+      const mentionedUser:
+        | Discord.User
+        | undefined = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."

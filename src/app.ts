@@ -30,7 +30,9 @@ const commandLookup: CommandLookup = new CommandLookup();
 export { commandLookup };
 
 // init discord client
-client.on('ready', async () => {
+client.on('ready', () => {
+  emojiLookup.init();
+
   // setup webhook handler
   let router: Router = express.Router();
   app.use('/api', routes(router, client));
