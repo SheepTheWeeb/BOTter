@@ -62,12 +62,6 @@ export default class OtterFactCommand extends Command {
     }
 
     msg.channel.send(this.facts[Math.floor(Math.random() * this.facts.length)]);
-
-    // react with otter-handsup
-    try {
-      msg.react(emojiLookup.get('HANDSUP'));
-    } catch (ex) {
-      throw Error(`Reaction failed because of: ${ex.message}`);
-    }
+    emojiLookup.react(msg, emojiLookup.get('HANDSUP'));
   }
 }

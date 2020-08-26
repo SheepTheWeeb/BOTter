@@ -98,6 +98,6 @@ export default class OtterRoodCommand extends Command {
     });
 
     // send a reply message with an emoji
-    msg.channel.send(`Rood! ${emojiLookup.get('rode_kaart')}`);
+    msg.channel.send(`Rood! ${emojiLookup.getStringByName('rode_kaart')}`);
   }
 }

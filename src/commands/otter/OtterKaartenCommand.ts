@@ -43,7 +43,9 @@ export default class OtterKaartenCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
+      const mentionedUser:
+        | Discord.User
+        | undefined = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
@@ -71,7 +73,9 @@ export default class OtterKaartenCommand extends Command {
     // check if the user is in database
     if (!intendedUser) {
       msg.reply(
-        `${taggedUser} has no redflags. ${emojiLookup.get('otterKEK')}`
+        `${taggedUser} has no redflags. ${emojiLookup.getStringByName(
+          'otterKEK'
+        )}`
       );
       return;
     }
@@ -92,7 +96,9 @@ export default class OtterKaartenCommand extends Command {
       order: [['updated_at', 'DESC']]
     });
 
-    const disgustedEmoji: any = emojiLookup.get('disgustedotter');
+    const disgustedEmoji: Discord.GuildEmoji = emojiLookup.get(
+      'disgustedotter'
+    );
 
     // set a max message length
     const MAX_MESSAGE_LENGTH: number = 1000;
@@ -105,13 +111,13 @@ export default class OtterKaartenCommand extends Command {
         'en-US'
       )}** - From **${flag.giver.discord_tag}**, reason: ${
         flag.reason
-        }. Double red? **${doublered}** ${disgustedEmoji}`;
+      }. Double red? **${doublered}** ${emojiLookup.getString(disgustedEmoji)}`;
     });
 
     // create embed message
-    const embed: any = new Discord.MessageEmbed()
+    const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setColor('#0088ff')
-      .setTitle(`Redflags ${disgustedEmoji}`)
+      .setTitle(`Redflags ${emojiLookup.getString(disgustedEmoji)}`)
       .setTimestamp()
       .setFooter('Je kenne niet altijd 6 gooie...');
 
@@ -152,6 +158,6 @@ export default class OtterKaartenCommand extends Command {
       msg.channel.send(embed);
     }
     // send a reaction with an emoji
-    msg.react(disgustedEmoji);
+    emojiLookup.react(msg, disgustedEmoji);
   }
 }

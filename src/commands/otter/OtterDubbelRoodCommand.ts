@@ -99,7 +99,7 @@ export default class OtterDubbelRoodCommand extends Command {
 
     // send a reply message with an emoji
     const dubbelRoodEmoji: Discord.GuildEmoji = emojiLookup.get('dubbel_rood');
-    msg.channel.send(`Dubbel rood! ${dubbelRoodEmoji}`);
-    msg.react(dubbelRoodEmoji);
+    msg.channel.send(`Dubbel rood! ${emojiLookup.getString(dubbelRoodEmoji)}`);
+    emojiLookup.react(msg, dubbelRoodEmoji);
   }
 }

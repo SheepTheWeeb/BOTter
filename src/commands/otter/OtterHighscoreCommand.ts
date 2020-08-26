@@ -53,18 +53,20 @@ export default class OtterHighscoreCommand extends Command {
     for (let i: number = 0; i < highscore.length; i++) {
       highscoreString += `\n**${i + 1}.** Otter: **${
         highscore[i].dataValues.receiver.discord_tag
-        }** - Flags: **${highscore[i].dataValues.flags}**`;
+      }** - Flags: **${highscore[i].dataValues.flags}**`;
     }
+
+    const rodeKaart: Discord.GuildEmoji = emojiLookup.get('rode_kaart');
 
     // create embed message
     const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setColor('#0088ff')
-      .setTitle(`Highscore Redflag ${emojiLookup.get('rode_kaart')}`)
+      .setTitle(`Highscore Redflag ${emojiLookup.getString(rodeKaart)}`)
       .setTimestamp()
       .setFooter('Top 10 Anime Battles');
 
     embed.setDescription(highscoreString);
     msg.channel.send(embed);
-    msg.react(emojiLookup.get('rode_kaart'));
+    emojiLookup.react(msg, rodeKaart);
   }
 }

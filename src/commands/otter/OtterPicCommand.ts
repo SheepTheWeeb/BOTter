@@ -55,16 +55,13 @@ export default class OtterPicCommand extends Command {
         .setImage(randomPost)
         .setTimestamp()
         .setFooter('Eerlijk gestolen van r/Otters');
+
       msg.channel.send(embed);
     } catch (ex) {
       throw new Error('Something went wrong when reaching Reddit');
     }
 
     // react with otter-handsup
-    try {
-      msg.react(emojiLookup.get('HANDSUP'));
-    } catch (ex) {
-      throw new Error(`Reaction failed because of: ${ex.message}`);
-    }
+    emojiLookup.react(msg, emojiLookup.get('HANDSUP'));
   }
 }

@@ -91,8 +91,6 @@ export default class OtterTotaalKaartenCommand extends Command {
       attributes: ['double_red']
     });
 
-    const thinkEmoji: Discord.GuildEmoji = emojiLookup.get('otterthink');
-
     let count: number = 0;
     flags.forEach((flag: Redflag) => {
       if (flag.double_red) {
@@ -102,10 +100,12 @@ export default class OtterTotaalKaartenCommand extends Command {
       }
     });
 
-    const otterThink: string = thinkEmoji ? thinkEmoji + '' : '';
+    const thinkEmoji: Discord.GuildEmoji = emojiLookup.get('otterthink');
 
     // send a reaction with an emoji
-    msg.reply(`${messagePart} ${count} red flags. ${otterThink}`);
-    msg.react(thinkEmoji);
+    msg.reply(
+      `${messagePart} ${count} red flags. ${emojiLookup.getString(thinkEmoji)}`
+    );
+    emojiLookup.react(msg, thinkEmoji);
   }
 }

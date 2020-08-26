@@ -43,7 +43,9 @@ export default class OtterRankCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
+      const mentionedUser:
+        | Discord.User
+        | undefined = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
@@ -91,11 +93,11 @@ export default class OtterRankCommand extends Command {
 
     if (otterRank) {
       msg.reply(
-        `${messagePart} staat **rank ${otterRank}**. ${emojiLookup.get(
+        `${messagePart} staat **rank ${otterRank}**. ${emojiLookup.getStringByName(
           'otter_shocked'
         )}`
       );
-      msg.react(emojiLookup.get('rilakkuma_otter'));
+      emojiLookup.react(msg, emojiLookup.get('rilakkuma_otter'));
     } else {
       msg.reply(`${messagePart} staat nog niet in de highscores.`);
     }

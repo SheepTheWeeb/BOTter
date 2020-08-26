@@ -29,7 +29,7 @@ export default class PingCommand extends Command {
       msg.reply(`Pong!, your command was: ${msg.content}`);
 
       // test reaction
-      msg.react(emojiLookup.get('HANDSUP'));
+      emojiLookup.react(msg, emojiLookup.get('HANDSUP'));
     } else {
       msg.reply('bananen op een fiets. ');
       msg.react('🍌');
