@@ -25,7 +25,7 @@ export default class EmojiLookup {
    *
    * @param emojiName name of the emoji you want to look up
    */
-  public get(emojiName: string): Discord.GuildEmoji | undefined {
-    return this.emojis.find((emoji) => emoji.name === emojiName);
+  public get(emojiName: string): Discord.GuildEmoji {
+    return this.emojis.find((emoji) => emoji.name === emojiName)!;
   }
 }

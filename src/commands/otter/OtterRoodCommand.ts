@@ -1,8 +1,8 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 import { emojiLookup } from './../../app';
 import { Otteruser } from '../../models/Otteruser';
 import { Redflag } from '../../models/Redflag';
-import { Message } from 'discord.js';
 /**
  * You can give red flags/cards to people
  */
@@ -17,7 +17,7 @@ export default class OtterRoodCommand extends Command {
     );
   }
 
-  async execute(msg: Message, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -50,7 +50,7 @@ export default class OtterRoodCommand extends Command {
     }
 
     // get mentioned user
-    const mentionedUser = msg.mentions.users.first();
+    const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
 
     if (!mentionedUser) {
       msg.reply(

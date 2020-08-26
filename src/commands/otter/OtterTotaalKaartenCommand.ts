@@ -1,4 +1,5 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 import { emojiLookup } from './../../app';
 import { Otteruser } from '../../models/Otteruser';
 import { Redflag } from '../../models/Redflag';
@@ -17,14 +18,14 @@ export default class OtterTotaalKaartenCommand extends Command {
     );
   }
 
-  async execute(msg: any, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
-    let intendedUser: any;
+    let intendedUser: Otteruser | null;
     let messagePart: string = '';
     let taggedUser: string;
 
@@ -43,7 +44,7 @@ export default class OtterTotaalKaartenCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser: any = msg.mentions.users.first();
+      const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
@@ -58,7 +59,7 @@ export default class OtterTotaalKaartenCommand extends Command {
         }
       });
 
-      messagePart = `${intendedUser.discord_tag} has`;
+      messagePart = `${intendedUser!.discord_tag} has`;
     } else {
       taggedUser = msg.author.tag;
 
@@ -81,17 +82,17 @@ export default class OtterTotaalKaartenCommand extends Command {
     }
 
     // show last 10 redflags
-    const flags: any = await Redflag.findAll({
+    const flags: Array<Redflag> = await Redflag.findAll({
       where: {
         user_id: intendedUser.id
       },
       attributes: ['double_red']
     });
 
-    const thinkEmoji: any = emojiLookup.get('otterthink');
+    const thinkEmoji: Discord.GuildEmoji = emojiLookup.get('otterthink');
 
     let count: number = 0;
-    flags.forEach((flag: any) => {
+    flags.forEach((flag: Redflag) => {
       if (flag.double_red) {
         count += 2;
       } else {
@@ -99,8 +100,10 @@ export default class OtterTotaalKaartenCommand extends Command {
       }
     });
 
+    const otterThink: string = thinkEmoji ? thinkEmoji + '' : '';
+
     // send a reaction with an emoji
-    msg.reply(`${messagePart} ${count} red flags. ${thinkEmoji}`);
+    msg.reply(`${messagePart} ${count} red flags. ${otterThink}`);
     msg.react(thinkEmoji);
   }
 }

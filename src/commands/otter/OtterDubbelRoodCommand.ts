@@ -1,4 +1,5 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 import { emojiLookup } from './../../app';
 import { Otteruser } from '../../models/Otteruser';
 import { Redflag } from '../../models/Redflag';
@@ -17,7 +18,7 @@ export default class OtterDubbelRoodCommand extends Command {
     );
   }
 
-  async execute(msg: any, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -50,7 +51,7 @@ export default class OtterDubbelRoodCommand extends Command {
     }
 
     // get mentioned user
-    const mentionedUser: any = msg.mentions.users.first();
+    const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
     if (!mentionedUser) {
       msg.reply(
         "In order to give a 'rode kaart', you need to tag a valid user."
@@ -97,7 +98,7 @@ export default class OtterDubbelRoodCommand extends Command {
     });
 
     // send a reply message with an emoji
-    const dubbelRoodEmoji: any = emojiLookup.get('dubbel_rood');
+    const dubbelRoodEmoji: Discord.GuildEmoji = emojiLookup.get('dubbel_rood');
     msg.channel.send(`Dubbel rood! ${dubbelRoodEmoji}`);
     msg.react(dubbelRoodEmoji);
   }

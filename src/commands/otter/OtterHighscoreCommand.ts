@@ -1,6 +1,5 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-
 import Discord from 'discord.js';
 import { Redflag } from '../../models/Redflag';
 import { Otteruser } from '../../models/Otteruser';
@@ -19,7 +18,7 @@ export default class OtterHighscoreCommand extends Command {
     );
   }
 
-  async execute(msg: any) {
+  async execute(msg: Discord.Message) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -54,11 +53,11 @@ export default class OtterHighscoreCommand extends Command {
     for (let i: number = 0; i < highscore.length; i++) {
       highscoreString += `\n**${i + 1}.** Otter: **${
         highscore[i].dataValues.receiver.discord_tag
-      }** - Flags: **${highscore[i].dataValues.flags}**`;
+        }** - Flags: **${highscore[i].dataValues.flags}**`;
     }
 
     // create embed message
-    const embed: any = new Discord.MessageEmbed()
+    const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setColor('#0088ff')
       .setTitle(`Highscore Redflag ${emojiLookup.get('rode_kaart')}`)
       .setTimestamp()

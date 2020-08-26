@@ -1,6 +1,5 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-
 import axios from 'axios';
 import Discord from 'discord.js';
 
@@ -18,7 +17,7 @@ export default class OtterPicCommand extends Command {
     );
   }
 
-  async execute(msg: any) {
+  async execute(msg: Discord.Message) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -50,7 +49,7 @@ export default class OtterPicCommand extends Command {
       }
 
       // image found
-      const embed: any = new Discord.MessageEmbed()
+      const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
         .setColor('#0088ff')
         .setTitle('Random Otter')
         .setImage(randomPost)

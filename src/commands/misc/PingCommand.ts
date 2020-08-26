@@ -1,5 +1,6 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
+import Discord from 'discord.js';
 
 /**
  * PingCommand class, this is the first command created for the bot
@@ -16,7 +17,7 @@ export default class PingCommand extends Command {
     );
   }
 
-  async execute(msg: any, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);

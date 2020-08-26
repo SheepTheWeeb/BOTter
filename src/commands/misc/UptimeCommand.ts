@@ -1,4 +1,5 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 
 /**
  * Tells how long the bot has been running
@@ -18,7 +19,7 @@ export default class UptimeCommand extends Command {
     this.uptime = Date.now();
   }
 
-  async execute(msg: any) {
+  async execute(msg: Discord.Message) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);

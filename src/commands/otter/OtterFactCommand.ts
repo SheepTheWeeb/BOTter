@@ -1,4 +1,5 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 import { emojiLookup } from './../../app';
 
 const otterfacts: Array<string> = [
@@ -53,7 +54,7 @@ export default class OtterFactCommand extends Command {
     this.facts = otterfacts;
   }
 
-  async execute(msg: any) {
+  async execute(msg: Discord.Message) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);

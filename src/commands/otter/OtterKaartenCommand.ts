@@ -1,9 +1,9 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-
 import Discord from 'discord.js';
 import { Otteruser } from '../../models/Otteruser';
 import { Redflag } from '../../models/Redflag';
+
 /**
  * gives the last 10 redflags
  */
@@ -18,7 +18,7 @@ export default class OtterKaartenCommand extends Command {
     );
   }
 
-  async execute(msg: any, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -43,7 +43,7 @@ export default class OtterKaartenCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser: any = msg.mentions.users.first();
+      const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
@@ -105,7 +105,7 @@ export default class OtterKaartenCommand extends Command {
         'en-US'
       )}** - From **${flag.giver.discord_tag}**, reason: ${
         flag.reason
-      }. Double red? **${doublered}** ${disgustedEmoji}`;
+        }. Double red? **${doublered}** ${disgustedEmoji}`;
     });
 
     // create embed message

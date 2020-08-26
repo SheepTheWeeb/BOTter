@@ -1,4 +1,5 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 import { emojiLookup } from './../../app';
 import { Sequelize } from 'sequelize';
 import { Redflag } from '../../models/Redflag';
@@ -18,7 +19,7 @@ export default class OtterRankCommand extends Command {
     );
   }
 
-  async execute(msg: any, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -42,7 +43,7 @@ export default class OtterRankCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser: any = msg.mentions.users.first();
+      const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
