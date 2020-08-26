@@ -1,3 +1,5 @@
+import Discord from 'discord.js';
+
 /**
  * Command class
  */
@@ -22,7 +24,7 @@ export default class Command {
     this.enabled = enabled;
   }
 
-  async execute(msg: any, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     throw new Error('command not implemented.');
   }
 }

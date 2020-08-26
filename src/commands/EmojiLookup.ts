@@ -1,16 +1,18 @@
+import Discord from 'discord.js';
+
 /**
  * class used to lookup emojis from servers
  */
 export default class EmojiLookup {
-  client: any;
-  emojis: Array<any>;
+  client: Discord.Client;
+  emojis: Array<Discord.GuildEmoji>;
 
-  constructor(client: any) {
+  constructor(client: Discord.Client) {
     this.client = client;
 
-    let emojis: Array<any> = [];
-    client.guilds.cache.forEach((guild: any) => {
-      guild.emojis.cache.forEach((emoji: any) => {
+    let emojis: Array<Discord.GuildEmoji> = [];
+    client.guilds.cache.forEach((guild: Discord.Guild) => {
+      guild.emojis.cache.forEach((emoji: Discord.GuildEmoji) => {
         emojis.push(emoji);
       });
     });
@@ -23,7 +25,7 @@ export default class EmojiLookup {
    *
    * @param emojiName name of the emoji you want to look up
    */
-  public get(emojiName: string): any | null {
+  public get(emojiName: string): Discord.GuildEmoji | undefined {
     return this.emojis.find((emoji) => emoji.name === emojiName);
   }
 }
