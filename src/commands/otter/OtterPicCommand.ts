@@ -1,6 +1,6 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import Discord from 'discord.js';
 
 /**
@@ -26,7 +26,7 @@ export default class OtterPicCommand extends Command {
 
     try {
       // make api call
-      const result: any = await axios.get(
+      const result: AxiosResponse<any> = await axios.get(
         'https://www.reddit.com/r/Otters.json?limit=100'
       );
       const posts: Array<any> = result.data.data.children;

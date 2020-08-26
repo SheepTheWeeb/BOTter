@@ -60,7 +60,7 @@ export default class OtterDubbelRoodCommand extends Command {
     }
 
     // first look up if the user already exists in the database
-    let receiver = await Otteruser.findOne({
+    let receiver: Otteruser | null = await Otteruser.findOne({
       where: {
         discord_id: mentionedUser.id
       }
@@ -75,7 +75,7 @@ export default class OtterDubbelRoodCommand extends Command {
     }
 
     // look up if the user that will give the Redflag already exists in the database
-    let giver = await Otteruser.findOne({
+    let giver: Otteruser | null = await Otteruser.findOne({
       where: {
         discord_id: msg.author.id
       }

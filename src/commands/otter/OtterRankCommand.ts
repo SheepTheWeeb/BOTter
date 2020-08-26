@@ -26,7 +26,7 @@ export default class OtterRankCommand extends Command {
       return;
     }
 
-    let intendedUserId: any;
+    let intendedUserId: string;
     let messagePart: string;
 
     // check if there are arguments

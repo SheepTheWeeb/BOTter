@@ -25,7 +25,7 @@ export default class OtterKaartenCommand extends Command {
       return;
     }
 
-    let intendedUser: any;
+    let intendedUser: Otteruser | null;
     let taggedUser: string;
 
     // check if there are arguments
@@ -81,7 +81,7 @@ export default class OtterKaartenCommand extends Command {
     }
 
     // show last 10 redflags
-    const flags = await Redflag.findAll({
+    const flags: Array<any> = await Redflag.findAll({
       include: [
         {
           model: Otteruser,
@@ -107,7 +107,7 @@ export default class OtterKaartenCommand extends Command {
     let flagString: string = '';
     flags.forEach((flag: any) => {
       const doublered: string = flag.double_red ? 'Yes' : 'No';
-      flagString += `\n**${flag.updatedAt.toLocaleDateString(
+      flagString += `\n**${flag.updated_at.toLocaleDateString(
         'en-US'
       )}** - From **${flag.giver.discord_tag}**, reason: ${
         flag.reason
