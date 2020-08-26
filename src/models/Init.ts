@@ -7,7 +7,7 @@ export function initializeDb() {
   const env: string = process.env.NODE_ENV || 'development';
   const envConfig = config[env as keyof typeof config];
 
-  const sequelize = new Sequelize(
+  const sequelize: Sequelize = new Sequelize(
     envConfig.database!,
     envConfig.username!,
     envConfig.password!,
