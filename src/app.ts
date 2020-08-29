@@ -8,6 +8,8 @@ import MessageHandler from './handlers/MessageHandler';
 import EmojiLookup from './commands/EmojiLookup';
 import CommandLookup from './commands/CommandLookup';
 import { initializeDb } from './models/Init';
+import { exec } from 'child_process';
+import { on } from 'process';
 
 const client: Discord.Client = new Discord.Client();
 const app = express();
@@ -28,6 +30,26 @@ const emojiLookup: EmojiLookup = new EmojiLookup(client);
 export { emojiLookup };
 const commandLookup: CommandLookup = new CommandLookup();
 export { commandLookup };
+
+// Execute migrations within app
+(async () => {
+  const { exec } = require('child_process');
+
+  await new Promise((resolve, reject) => {
+    const migrate = exec(
+      'npm run migrate',
+      { env: process.env },
+      (err: any, stdout: any, stderr: any) => {
+        resolve();
+      }
+    );
+
+    migrate.stdout.on('data', (data: string | string[]) => {
+      console.log(data);
+      migrate.kill();
+    });
+  });
+})();
 
 // init discord client
 client.on('ready', () => {
