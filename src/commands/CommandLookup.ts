@@ -12,6 +12,7 @@ import HelpCommand from './misc/HelpCommand';
 import UptimeCommand from './misc/UptimeCommand';
 import OtterHighscoreCommand from './otter/OtterHighscoreCommand';
 import OtterRankCommand from './otter/OtterRankCommand';
+import DruifCommand from './misc/DruifCommand';
 
 export default class CommandLookup {
   commands: Array<Command>;
@@ -20,6 +21,7 @@ export default class CommandLookup {
     const commands = {
       PingCommand: new PingCommand(),
       PannekoekCommand: new PannekoekCommand(),
+      DruifCommand: new DruifCommand(),
       HelpCommand: new HelpCommand(),
       UptimeCommand: new UptimeCommand(),
       OtterPicCommand: new OtterPicCommand(),
