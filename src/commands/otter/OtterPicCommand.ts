@@ -1,7 +1,6 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import Discord from 'discord.js';
 
 /**
@@ -18,7 +17,7 @@ export default class OtterPicCommand extends Command {
     );
   }
 
-  async execute(msg: any) {
+  async execute(msg: Discord.Message) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -27,7 +26,7 @@ export default class OtterPicCommand extends Command {
 
     try {
       // make api call
-      const result: any = await axios.get(
+      const result: AxiosResponse<any> = await axios.get(
         'https://www.reddit.com/r/Otters.json?limit=100'
       );
       const posts: Array<any> = result.data.data.children;
@@ -50,22 +49,19 @@ export default class OtterPicCommand extends Command {
       }
 
       // image found
-      const embed: any = new Discord.MessageEmbed()
+      const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
         .setColor('#0088ff')
         .setTitle('Random Otter')
         .setImage(randomPost)
         .setTimestamp()
         .setFooter('Eerlijk gestolen van r/Otters');
+
       msg.channel.send(embed);
     } catch (ex) {
       throw new Error('Something went wrong when reaching Reddit');
     }
 
     // react with otter-handsup
-    try {
-      msg.react(emojiLookup.get('HANDSUP'));
-    } catch (ex) {
-      throw new Error(`Reaction failed because of: ${ex.message}`);
-    }
+    emojiLookup.react(msg, emojiLookup.get('HANDSUP'));
   }
 }

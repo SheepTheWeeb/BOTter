@@ -1,6 +1,5 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-
 import Discord from 'discord.js';
 import { Redflag } from '../../models/Redflag';
 import { Otteruser } from '../../models/Otteruser';
@@ -19,7 +18,7 @@ export default class OtterHighscoreCommand extends Command {
     );
   }
 
-  async execute(msg: any) {
+  async execute(msg: Discord.Message) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -57,15 +56,17 @@ export default class OtterHighscoreCommand extends Command {
       }** - Flags: **${highscore[i].dataValues.flags}**`;
     }
 
+    const rodeKaart: Discord.GuildEmoji = emojiLookup.get('rode_kaart');
+
     // create embed message
-    const embed: any = new Discord.MessageEmbed()
+    const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setColor('#0088ff')
-      .setTitle(`Highscore Redflag ${emojiLookup.get('rode_kaart')}`)
+      .setTitle(`Highscore Redflag ${emojiLookup.getString(rodeKaart)}`)
       .setTimestamp()
       .setFooter('Top 10 Anime Battles');
 
     embed.setDescription(highscoreString);
     msg.channel.send(embed);
-    msg.react(emojiLookup.get('rode_kaart'));
+    emojiLookup.react(msg, rodeKaart);
   }
 }

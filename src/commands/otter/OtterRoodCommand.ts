@@ -1,8 +1,8 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 import { emojiLookup } from './../../app';
 import { Otteruser } from '../../models/Otteruser';
 import { Redflag } from '../../models/Redflag';
-import { Message } from 'discord.js';
 /**
  * You can give red flags/cards to people
  */
@@ -17,7 +17,7 @@ export default class OtterRoodCommand extends Command {
     );
   }
 
-  async execute(msg: Message, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -50,7 +50,7 @@ export default class OtterRoodCommand extends Command {
     }
 
     // get mentioned user
-    const mentionedUser = msg.mentions.users.first();
+    const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
 
     if (!mentionedUser) {
       msg.reply(
@@ -60,7 +60,7 @@ export default class OtterRoodCommand extends Command {
     }
 
     // look up if the user that will receive the redflag already exists in the database
-    let receiver = await Otteruser.findOne({
+    let receiver: Otteruser | null = await Otteruser.findOne({
       where: {
         discord_id: mentionedUser.id
       }
@@ -75,7 +75,7 @@ export default class OtterRoodCommand extends Command {
     }
 
     // look up if the user that will give the redflag already exists in the database
-    let giver = await Otteruser.findOne({
+    let giver: Otteruser | null = await Otteruser.findOne({
       where: {
         discord_id: msg.author.id
       }
@@ -98,6 +98,6 @@ export default class OtterRoodCommand extends Command {
     });
 
     // send a reply message with an emoji
-    msg.channel.send(`Rood! ${emojiLookup.get('rode_kaart')}`);
+    msg.channel.send(`Rood! ${emojiLookup.getStringByName('rode_kaart')}`);
   }
 }

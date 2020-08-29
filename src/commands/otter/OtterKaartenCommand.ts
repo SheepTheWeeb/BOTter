@@ -1,9 +1,9 @@
 import Command from '../Command';
 import { emojiLookup } from './../../app';
-
 import Discord from 'discord.js';
 import { Otteruser } from '../../models/Otteruser';
 import { Redflag } from '../../models/Redflag';
+
 /**
  * gives the last 10 redflags
  */
@@ -18,14 +18,14 @@ export default class OtterKaartenCommand extends Command {
     );
   }
 
-  async execute(msg: any, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
-    let intendedUser: any;
+    let intendedUser: Otteruser | null;
     let taggedUser: string;
 
     // check if there are arguments
@@ -43,7 +43,9 @@ export default class OtterKaartenCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser: any = msg.mentions.users.first();
+      const mentionedUser:
+        | Discord.User
+        | undefined = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
@@ -71,13 +73,15 @@ export default class OtterKaartenCommand extends Command {
     // check if the user is in database
     if (!intendedUser) {
       msg.reply(
-        `${taggedUser} has no redflags. ${emojiLookup.get('otterKEK')}`
+        `${taggedUser} has no redflags. ${emojiLookup.getStringByName(
+          'otterKEK'
+        )}`
       );
       return;
     }
 
     // show last 10 redflags
-    const flags = await Redflag.findAll({
+    const flags: Array<any> = await Redflag.findAll({
       include: [
         {
           model: Otteruser,
@@ -92,7 +96,9 @@ export default class OtterKaartenCommand extends Command {
       order: [['updated_at', 'DESC']]
     });
 
-    const disgustedEmoji: any = emojiLookup.get('disgustedotter');
+    const disgustedEmoji: Discord.GuildEmoji = emojiLookup.get(
+      'disgustedotter'
+    );
 
     // set a max message length
     const MAX_MESSAGE_LENGTH: number = 1000;
@@ -101,17 +107,17 @@ export default class OtterKaartenCommand extends Command {
     let flagString: string = '';
     flags.forEach((flag: any) => {
       const doublered: string = flag.double_red ? 'Yes' : 'No';
-      flagString += `\n**${flag.updatedAt.toLocaleDateString(
+      flagString += `\n**${flag.updated_at.toLocaleDateString(
         'en-US'
       )}** - From **${flag.giver.discord_tag}**, reason: ${
         flag.reason
-      }. Double red? **${doublered}** ${disgustedEmoji}`;
+      }. Double red? **${doublered}** ${emojiLookup.getString(disgustedEmoji)}`;
     });
 
     // create embed message
-    const embed: any = new Discord.MessageEmbed()
+    const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setColor('#0088ff')
-      .setTitle(`Redflags ${disgustedEmoji}`)
+      .setTitle(`Redflags ${emojiLookup.getString(disgustedEmoji)}`)
       .setTimestamp()
       .setFooter('Je kenne niet altijd 6 gooie...');
 
@@ -152,6 +158,6 @@ export default class OtterKaartenCommand extends Command {
       msg.channel.send(embed);
     }
     // send a reaction with an emoji
-    msg.react(disgustedEmoji);
+    emojiLookup.react(msg, disgustedEmoji);
   }
 }

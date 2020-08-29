@@ -17,7 +17,7 @@ export default class HelpCommand extends Command {
     );
   }
 
-  async execute(msg: any) {
+  async execute(msg: Discord.Message) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -42,7 +42,7 @@ export default class HelpCommand extends Command {
     }
 
     // create embed message
-    const embed: any = new Discord.MessageEmbed()
+    const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setColor('#0088ff')
       .setTitle('All commands + usage')
       .setTimestamp()

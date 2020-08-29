@@ -1,4 +1,5 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 
 /**
  * Calls you a pannekoek
@@ -14,7 +15,7 @@ export default class PannekoekCommand extends Command {
     );
   }
 
-  async execute(msg: any) {
+  async execute(msg: Discord.Message) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);

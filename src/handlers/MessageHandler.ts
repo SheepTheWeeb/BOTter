@@ -1,4 +1,6 @@
 import { commandLookup } from './../app';
+import Discord from 'discord.js';
+import Command from '../commands/Command';
 
 export default class MessageHandler {
   prefix: string;
@@ -12,7 +14,7 @@ export default class MessageHandler {
    *
    * @param {*} msg The message that it reads from discord
    */
-  public async handle(msg: any) {
+  public async handle(msg: Discord.Message) {
     // Stop if the message is from a bot
     if (msg.author.bot) return;
 
@@ -32,7 +34,7 @@ export default class MessageHandler {
 
     // Execute commands
     if (commandLookup.exists(primaryCommand)) {
-      const command = commandLookup.get(primaryCommand);
+      const command: Command | null = commandLookup.get(primaryCommand);
 
       if (command !== null) {
         await command.execute(msg, args);

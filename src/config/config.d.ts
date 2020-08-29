@@ -8,9 +8,7 @@ interface Environment {
 }
 
 interface Config {
-  development: Environment;
-  test: Environment;
-  production: Environment;
+  [key: string]: Environment;
 }
 
 declare const config: Config;

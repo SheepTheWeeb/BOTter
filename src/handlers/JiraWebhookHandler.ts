@@ -1,15 +1,16 @@
 import Discord from 'discord.js';
 import { emojiLookup } from './../app';
+import { Request, Response } from 'express';
 
 export default {
-  async handle(req: any, res: any, client: any) {
+  async handle(req: Request, res: Response, client: Discord.Client) {
     // grab otter discord server and log channel
-    const otterGuild: any = client.guilds.cache.find(
-      (guild: any) => guild.id === '730511256682889319'
-    );
-    const logChannel: any = otterGuild.channels.cache.find(
-      (channel: any) => channel.id === '738358619032256593'
-    );
+    const otterGuild: Discord.Guild = client.guilds.cache.find(
+      (guild: Discord.Guild) => guild.id === '730511256682889319'
+    )!;
+    const logChannel: Discord.GuildChannel = otterGuild.channels.cache.find(
+      (channel: Discord.GuildChannel) => channel.id === '738358619032256593'
+    )!;
 
     // only grab first name and picture
     const jiraName: string = req.body.user.displayName.split(' ')[0];
@@ -32,7 +33,7 @@ export default {
     }
 
     // create embed
-    const embed = new Discord.MessageEmbed()
+    const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setColor('#0088ff')
       .setAuthor(jiraName, jiraPics[Object.keys(jiraPics)[0]])
       .setTitle(
@@ -59,7 +60,7 @@ export default {
     }
 
     // send message and completed response status
-    logChannel.send(embed);
+    (logChannel as Discord.TextChannel).send(embed);
     res.sendStatus(200);
   }
 };

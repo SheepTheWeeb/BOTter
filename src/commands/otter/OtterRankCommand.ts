@@ -1,4 +1,5 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 import { emojiLookup } from './../../app';
 import { Sequelize } from 'sequelize';
 import { Redflag } from '../../models/Redflag';
@@ -18,14 +19,14 @@ export default class OtterRankCommand extends Command {
     );
   }
 
-  async execute(msg: any, args: Array<string>) {
+  async execute(msg: Discord.Message, args: Array<string>) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
 
-    let intendedUserId: any;
+    let intendedUserId: string;
     let messagePart: string;
 
     // check if there are arguments
@@ -42,7 +43,9 @@ export default class OtterRankCommand extends Command {
       }
 
       // get mentioned user
-      const mentionedUser: any = msg.mentions.users.first();
+      const mentionedUser:
+        | Discord.User
+        | undefined = msg.mentions.users.first();
       if (!mentionedUser) {
         msg.reply(
           "In order to give a 'rode kaart', you need to tag a valid user."
@@ -90,11 +93,11 @@ export default class OtterRankCommand extends Command {
 
     if (otterRank) {
       msg.reply(
-        `${messagePart} staat **rank ${otterRank}**. ${emojiLookup.get(
+        `${messagePart} staat **rank ${otterRank}**. ${emojiLookup.getStringByName(
           'otter_shocked'
         )}`
       );
-      msg.react(emojiLookup.get('rilakkuma_otter'));
+      emojiLookup.react(msg, emojiLookup.get('rilakkuma_otter'));
     } else {
       msg.reply(`${messagePart} staat nog niet in de highscores.`);
     }

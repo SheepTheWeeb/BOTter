@@ -1,4 +1,5 @@
 import Command from '../Command';
+import Discord from 'discord.js';
 import { emojiLookup } from './../../app';
 
 const otterfacts: Array<string> = [
@@ -53,7 +54,7 @@ export default class OtterFactCommand extends Command {
     this.facts = otterfacts;
   }
 
-  async execute(msg: any) {
+  async execute(msg: Discord.Message) {
     // check if command is enabled
     if (!this.enabled) {
       console.log(`Command '${this.name}' is disabled but still called.`);
@@ -61,12 +62,6 @@ export default class OtterFactCommand extends Command {
     }
 
     msg.channel.send(this.facts[Math.floor(Math.random() * this.facts.length)]);
-
-    // react with otter-handsup
-    try {
-      msg.react(emojiLookup.get('HANDSUP'));
-    } catch (ex) {
-      throw Error(`Reaction failed because of: ${ex.message}`);
-    }
+    emojiLookup.react(msg, emojiLookup.get('HANDSUP'));
   }
 }
