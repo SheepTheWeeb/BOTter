@@ -2,15 +2,15 @@ import Command from '../Command';
 import Discord from 'discord.js';
 
 /**
- * Calls you a pannekoek
+ * Calls you a druif
  */
-export default class PannekoekCommand extends Command {
+export default class DruifCommand extends Command {
   constructor() {
     super(
-      'pannekoek',
+      'druif',
       [],
-      "Calls you a 'Pannekoek'.",
-      `${process.env.PREFIX}pannekoek`,
+      "Calls you a 'Druif'.",
+      `${process.env.PREFIX}druif`,
       true
     );
   }
@@ -21,14 +21,15 @@ export default class PannekoekCommand extends Command {
       console.log(`Command '${this.name}' is disabled but still called.`);
       return;
     }
+
     // get mentioned user
     const mentionedUser: Discord.User | undefined = msg.mentions.users.first();
     if (!mentionedUser) {
-      msg.reply('je bent een pannekoek.');
-      msg.react('🥞');
+      msg.reply('je bent een druif.');
+      msg.react('🍇');
     } else {
-      msg.channel.send(`<@${mentionedUser.id}>, je bent een pannekoek.`);
-      msg.react('🥞');
+      msg.channel.send(`<@${mentionedUser.id}>, je bent een druif.`);
+      msg.react('🍇');
     }
   }
 }
