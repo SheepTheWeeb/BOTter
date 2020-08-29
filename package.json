@@ -7,7 +7,6 @@
     "start": "tsc && node build/app.js",
     "start:dev": "nodemon",
     "migrate": "sequelize-cli db:migrate",
-    "postinstall": "npm run migrate & npm run build",
     "build": "tsc"
   },
   "author": "Schaap",
