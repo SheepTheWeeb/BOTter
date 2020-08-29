@@ -28,7 +28,7 @@ export default class PannekoekCommand extends Command {
       msg.react('🥞');
     } else {
       msg.channel.send(`<@${mentionedUser.id}>, je bent een pannekoek.`);
-      msg.react('🍇');
+      msg.react('🥞');
     }
   }
 }
