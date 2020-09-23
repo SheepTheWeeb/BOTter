@@ -5,6 +5,7 @@ interface Environment {
   host: string;
   port: number;
   dialect: string;
+  dialectOptions: object;
 }
 
 interface Config {
