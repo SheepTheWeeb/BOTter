@@ -1,4 +1,5 @@
 require('dotenv').config();
+var fs = require('fs');
 
 module.exports = {
   development: {
@@ -22,7 +23,14 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
-    port: 50368,
-    dialect: 'mysql'
+    port: 3306,
+    dialect: 'mysql',
+    dialectOptions: {
+      ssl: {
+        // TODO: enforce SSL in the future
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
   }
 };

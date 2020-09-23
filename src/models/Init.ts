@@ -11,7 +11,7 @@ export function initializeDb() {
     envConfig.database!,
     envConfig.username!,
     envConfig.password!,
-    { host: envConfig.host!, port: envConfig.port!, dialect: 'mysql' }
+    { host: envConfig.host!, port: envConfig.port!, dialect: 'mysql', dialectOptions: envConfig.dialectOptions }
   );
 
   Otteruser.prepareInit(sequelize);
