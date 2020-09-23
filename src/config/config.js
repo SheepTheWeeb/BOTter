@@ -29,7 +29,7 @@ module.exports = {
       ssl: {
         // TODO: enforce SSL in the future
         require: true,
-        rejectUnauthorized: false    
+        rejectUnauthorized: false
       }
     }
   }
