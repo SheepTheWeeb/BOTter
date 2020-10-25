@@ -4,7 +4,7 @@
   "description": "De otter bot",
   "main": "src/app.ts",
   "scripts": {
-    "start": "tsc && node build/app.js",
+    "start": "node build/app.js",
     "start:dev": "nodemon",
     "migrate": "sequelize-cli db:migrate",
     "build": "tsc"
