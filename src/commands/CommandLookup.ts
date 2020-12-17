@@ -13,6 +13,7 @@ import UptimeCommand from './misc/UptimeCommand';
 import OtterHighscoreCommand from './otter/OtterHighscoreCommand';
 import OtterRankCommand from './otter/OtterRankCommand';
 import DruifCommand from './misc/DruifCommand';
+import OkCommand from './misc/OkCommand';
 
 export default class CommandLookup {
   commands: Array<Command>;
@@ -24,6 +25,7 @@ export default class CommandLookup {
       DruifCommand: new DruifCommand(),
       HelpCommand: new HelpCommand(),
       UptimeCommand: new UptimeCommand(),
+      OkCommand: new OkCommand(),
       OtterPicCommand: new OtterPicCommand(),
       OtterFactCommand: new OtterFactCommand(),
       OtterRoodCommand: new OtterRoodCommand(),
