@@ -1,6 +1,5 @@
 require('dotenv').config();
-import appInsights = require('applicationinsights');
-import Discord from 'discord.js';
+import DiscordJS, { Intents, TextChannel } from 'discord.js';
 import express, { NextFunction, Request, Response, Router } from 'express';
 import bodyParser from 'body-parser';
 import routes from './routes';
@@ -8,23 +7,16 @@ import MessageHandler from './handlers/MessageHandler';
 import EmojiLookup from './commands/EmojiLookup';
 import CommandLookup from './commands/CommandLookup';
 import { initializeDb } from './models/Init';
-import { exec } from 'child_process';
-import { on } from 'process';
 
-const client: Discord.Client = new Discord.Client();
+const client = new DiscordJS.Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
+});
 const app = express();
 app.use(bodyParser.json());
 initializeDb();
 // load in MessageHandler
 const messageHandler: MessageHandler = new MessageHandler(process.env.PREFIX);
 
-//Init Microsoft Application Insights
-appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
-
-const insightsClient: appInsights.TelemetryClient = new appInsights.TelemetryClient(
-  process.env.APPINSIGHTS_INSTRUMENTATIONKEY
-);
-export { insightsClient };
 // load in emojiLookup and commandlookup
 const emojiLookup: EmojiLookup = new EmojiLookup(client);
 export { emojiLookup };
@@ -35,13 +27,11 @@ export { commandLookup };
 (async () => {
   const { exec } = require('child_process');
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     const migrate = exec(
       'npm run migrate',
       { env: process.env },
-      (err: any, stdout: any, stderr: any) => {
-        resolve();
-      }
+      (err: any, stdout: any, stderr: any) => resolve()
     );
 
     migrate.stdout.on('data', (data: string | string[]) => {
@@ -64,7 +54,7 @@ client.on('ready', () => {
 });
 
 // use message handler to handle messages
-client.on('message', (msg: Discord.Message) => {
+client.on('messageCreate', (msg) => {
   messageHandler.handle(msg);
 });
 
@@ -78,16 +68,10 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 process.on('uncaughtException', (err: Error) => {
-  insightsClient.trackException({
-    exception: err
-  });
   console.log(`Uncaught Exception: ${err.stack}`);
   // process.exit(1) Best practice is to exit app on errors so that Docker can restart automatically
 });
 
 process.on('unhandledRejection', (err: Error) => {
-  insightsClient.trackException({
-    exception: err
-  });
   console.log(`Unhandled rejection: ${err.stack}`);
 });
