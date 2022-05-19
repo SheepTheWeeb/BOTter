@@ -12,6 +12,7 @@ const client = new DiscordJS.Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
 });
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 initializeDb();
 // load in MessageHandler

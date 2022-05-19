@@ -1,9 +1,10 @@
 import Discord from 'discord.js';
-import { emojiLookup } from './../app';
+// import { emojiLookup } from './../app';
 import { Request, Response } from 'express';
 
 export default {
   async handle(req: Request, res: Response, client: Discord.Client) {
+    /*
     // grab otter discord server and log channel
     const otterGuild: Discord.Guild = client.guilds.cache.find(
       (guild: Discord.Guild) => guild.id === '730511256682889319'
@@ -61,6 +62,7 @@ export default {
 
     // send message and completed response status
     (logChannel as Discord.TextChannel).send(embed);
+    */
     res.sendStatus(200);
   }
 };

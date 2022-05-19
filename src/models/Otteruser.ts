@@ -1,5 +1,4 @@
-import { DataTypes, Sequelize } from 'sequelize';
-import { Model } from 'sequelize';
+import { DataTypes, Sequelize, Model } from 'sequelize';
 import { Redflag } from './Redflag';
 
 export interface IOtteruser {

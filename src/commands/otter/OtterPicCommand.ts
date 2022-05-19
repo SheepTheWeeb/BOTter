@@ -56,7 +56,7 @@ export default class OtterPicCommand extends Command {
         .setTimestamp()
         .setFooter('Eerlijk gestolen van r/Otters');
 
-      msg.channel.send(embed);
+      // msg.channel.send(embed);
     } catch (ex) {
       throw new Error('Something went wrong when reaching Reddit');
     }
