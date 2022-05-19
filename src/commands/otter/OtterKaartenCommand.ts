@@ -139,7 +139,7 @@ export default class OtterKaartenCommand extends Command {
         if (characterCount >= MAX_MESSAGE_LENGTH) {
           // send the message
           embed.setDescription(newFlagString);
-          msg.channel.send(embed);
+          // msg.channel.send(embed);
 
           // reset the counter
           newFlagString = '';
@@ -149,13 +149,13 @@ export default class OtterKaartenCommand extends Command {
         // if it reaches the end send the message
         if (i === parts.length - 1 && newFlagString !== '') {
           embed.setDescription(newFlagString);
-          msg.channel.send(embed);
+          // msg.channel.send(embed);
         }
       }
     } else {
       // reply
       embed.setDescription(flagString);
-      msg.channel.send(embed);
+      // msg.channel.send(embed);
     }
     // send a reaction with an emoji
     emojiLookup.react(msg, disgustedEmoji);

@@ -1,5 +1,4 @@
 import Command from './Command';
-import { insightsClient } from './../app';
 import PingCommand from './misc/PingCommand';
 import PannekoekCommand from './misc/PannekoekCommand';
 import OtterPicCommand from './otter/OtterPicCommand';
@@ -83,10 +82,6 @@ export default class CommandLookup {
           break;
         }
       }
-    }
-
-    if (command === null) {
-      insightsClient.trackTrace({ message: 'Command does not exist' });
     }
 
     return command;

@@ -66,7 +66,7 @@ export default class OtterHighscoreCommand extends Command {
       .setFooter('Top 10 Anime Battles');
 
     embed.setDescription(highscoreString);
-    msg.channel.send(embed);
+    // msg.channel.send(embed);
     emojiLookup.react(msg, rodeKaart);
   }
 }

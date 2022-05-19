@@ -66,7 +66,7 @@ export default class HelpCommand extends Command {
         if (characterCount >= MAX_MESSAGE_LENGTH) {
           // send the message
           embed.setDescription(newCommandString);
-          msg.channel.send(embed);
+          // msg.channel.send(embed);
 
           // reset the counter
           newCommandString = '';
@@ -76,13 +76,13 @@ export default class HelpCommand extends Command {
         // if it reaches the end send the message
         if (i === parts.length - 1 && newCommandString !== '') {
           embed.setDescription(newCommandString);
-          msg.channel.send(embed);
+          // msg.channel.send(embed);
         }
       }
     } else {
       // reply
       embed.setDescription(commandString);
-      msg.channel.send(embed);
+      // msg.channel.send(embed);
     }
   }
 }

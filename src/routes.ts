@@ -1,8 +1,8 @@
 import JiraWebhookHandler from './handlers/JiraWebhookHandler';
-import Discord from 'discord.js';
+import DiscordJS from 'discord.js';
 import { Router, Request, Response } from 'express';
 
-export default (router: Router, client: Discord.Client) => {
+export default (router: Router, client: DiscordJS.Client) => {
   router.post(`/jira/${process.env.JIRA_SECRET}`, (req: Request, res: Response) => {
     JiraWebhookHandler.handle(req, res, client);
   });

@@ -33,7 +33,7 @@ export default class OkCommand extends Command {
       .setTimestamp()
       .setFooter('Het is oke');
 
-    msg.channel.send(embed);
+    // msg.channel.send(embed);
     emojiLookup.react(msg, emojiLookup.get('otter'));
   }
 }
