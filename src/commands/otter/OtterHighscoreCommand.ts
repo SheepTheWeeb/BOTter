@@ -63,10 +63,10 @@ export default class OtterHighscoreCommand extends Command {
       .setColor('#0088ff')
       .setTitle(`Highscore Redflag ${emojiLookup.getString(rodeKaart)}`)
       .setTimestamp()
-      .setFooter('Top 10 Anime Battles');
+      .setFooter({ text: 'Top 10 Anime Battles' });
 
     embed.setDescription(highscoreString);
-    // msg.channel.send(embed);
+    msg.channel.send({ embeds: [embed] });
     emojiLookup.react(msg, rodeKaart);
   }
 }

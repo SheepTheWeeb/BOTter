@@ -54,9 +54,9 @@ export default class OtterPicCommand extends Command {
         .setTitle('Random Otter')
         .setImage(randomPost)
         .setTimestamp()
-        .setFooter('Eerlijk gestolen van r/Otters');
+        .setFooter({ text: 'Eerlijk gestolen van r/Otters' });
 
-      // msg.channel.send(embed);
+      msg.channel.send({ embeds: [embed] });
     } catch (ex) {
       throw new Error('Something went wrong when reaching Reddit');
     }
